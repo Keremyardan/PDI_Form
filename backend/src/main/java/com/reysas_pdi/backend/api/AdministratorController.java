@@ -1,6 +1,7 @@
 package com.reysas_pdi.backend.api;
 
 import com.reysas_pdi.backend.business.abstracts.IAdministratorService;
+import com.reysas_pdi.backend.business.abstracts.IOfficerService;
 import com.reysas_pdi.backend.core.config.result.ResultData;
 import com.reysas_pdi.backend.core.modelMapper.IModelMapperService;
 import com.reysas_pdi.backend.dto.request.AdministratorSaveRequest;
@@ -24,7 +25,7 @@ public class AdministratorController {
 
     private final IAdministratorService administratorService;
     private final IModelMapperService modelMappperService;
-    //private final IOfficerService officerService;
+    private final IOfficerService officerService;
 
     public AdministratorController(IAdministratorService administratorService,
                                    IModelMapperService modelMapperService,
@@ -32,18 +33,18 @@ public class AdministratorController {
     ) {
         this.administratorService = administratorService;
         this.modelMappperService = modelMapperService;
-        //this.officerService = officerService;
+        this.officerService = officerService;
     }
 
     @PostMapping("/administrator")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AdministratorResponse> save(@Valid @RequestBody AdministratorSaveRequest administratorSaveRequest) {
-        Administrator saveAdministrator =this.modelMapper.forRequest().map(administratorSaveRequest, Administrator.class);
+        Administrator saveAdministrator =this.modelMappperService.forRequest().map(administratorSaveRequest, Administrator.class);
 
         Officer officer = this.officerService.get(administratorSaveRequest.getAdministratorId());
         saveAdministrator.setOfficer(officer);
 
         this.administratorService.saveAdministrator(saveAdministrator);
-        return ResultHelper.created(this.modelMapper.forResponse().map(saveAdministrator, Administrator.class));
+        return ResultHelper.created(this.modelMappperService.forResponse().map(saveAdministrator, Administrator.class));
     }
 }
