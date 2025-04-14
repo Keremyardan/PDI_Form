@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AdministratorRequest {
+public class AdministratorSaveRequest {
     private String name;
 }
