@@ -20,4 +20,7 @@ public class Officer {
 
     @Column(name="name", nullable = false)
     private String name;
+
+    @Column(name = "email", nullable = false)
+    private String email;
 }
