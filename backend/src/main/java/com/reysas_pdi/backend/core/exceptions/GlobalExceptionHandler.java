@@ -4,9 +4,6 @@ import com.reysas_pdi.backend.core.config.result.Result;
 import com.reysas_pdi.backend.core.config.result.ResultData;
 import com.reysas_pdi.backend.core.config.result.ResultHelper;
 import com.reysas_pdi.backend.core.config.utilities.Msg;
-import org.hibernate.query.results.ResultsHelper;
-import org.postgresql.core.ResultHandler;
-import org.springframework.boot.autoconfigure.batch.BatchTaskExecutor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -2,6 +2,7 @@ package com.reysas_pdi.backend.business.concretes;
 
 import com.reysas_pdi.backend.business.abstracts.IAdministratorService;
 import com.reysas_pdi.backend.core.config.utilities.Msg;
+import com.reysas_pdi.backend.core.exceptions.NotFoundException;
 import com.reysas_pdi.backend.dao.AdministratorRepo;
 import com.reysas_pdi.backend.entity.Administrator;
 import org.springframework.data.domain.Page;
