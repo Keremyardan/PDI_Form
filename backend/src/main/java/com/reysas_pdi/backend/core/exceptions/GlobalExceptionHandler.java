@@ -2,6 +2,7 @@ package com.reysas_pdi.backend.core.exceptions;
 
 import com.reysas_pdi.backend.core.config.result.Result;
 import com.reysas_pdi.backend.core.config.result.ResultData;
+import com.reysas_pdi.backend.core.config.result.ResultHelper;
 import com.reysas_pdi.backend.core.config.utilities.Msg;
 import org.hibernate.query.results.ResultsHelper;
 import org.postgresql.core.ResultHandler;

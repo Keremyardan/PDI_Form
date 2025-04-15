@@ -3,6 +3,7 @@ package com.reysas_pdi.backend.api;
 import com.reysas_pdi.backend.business.abstracts.IAdministratorService;
 import com.reysas_pdi.backend.business.abstracts.IOfficerService;
 import com.reysas_pdi.backend.core.config.result.ResultData;
+import com.reysas_pdi.backend.core.config.result.ResultHelper;
 import com.reysas_pdi.backend.core.modelMapper.IModelMapperService;
 import com.reysas_pdi.backend.dto.request.AdministratorSaveRequest;
 import com.reysas_pdi.backend.dto.response.AdministratorResponse;
@@ -11,15 +12,12 @@ import com.reysas_pdi.backend.entity.Administrator;
 import com.reysas_pdi.backend.entity.Officer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 
-@Controller
+@RestController
 @RequestMapping("/administrators")
 public class AdministratorController {
 
@@ -30,7 +28,8 @@ public class AdministratorController {
     public AdministratorController(IAdministratorService administratorService,
                                    IModelMapperService modelMapperService,
                                    IOfficerService officerService
-    ) {
+    )
+    {
         this.administratorService = administratorService;
         this.modelMappperService = modelMapperService;
         this.officerService = officerService;
@@ -45,6 +44,6 @@ public class AdministratorController {
         saveAdministrator.setOfficer(officer);
 
         this.administratorService.saveAdministrator(saveAdministrator);
-        return ResultHelper.created(this.modelMappperService.forResponse().map(saveAdministrator, Administrator.class));
+        return ResultHelper.created(this.modelMappperService.forResponse().map(saveAdministrator, AdministratorResponse.class));
     }
 }

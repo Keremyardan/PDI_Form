@@ -16,10 +16,14 @@ import lombok.Setter;
 public class Administrator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="id" )
+    @Column(name ="administrator_id" )
     private long id;
 
 
-    @Column(name="name", nullable = false)
+    @Column(name="administrator_name", nullable = false)
     private String name;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="admin_officer_id" ,referencedColumnName = "officer_id", nullable = false)
+    Officer officer;
 }

@@ -1,5 +1,6 @@
 package com.reysas_pdi.backend.business.abstracts;
 
+import com.reysas_pdi.backend.dto.request.AdministratorSaveRequest;
 import com.reysas_pdi.backend.entity.Administrator;
 import org.springframework.data.domain.Page;
 
