@@ -1,6 +1,8 @@
 package com.reysas_pdi.backend.core.config.result;
 
 import com.reysas_pdi.backend.core.config.utilities.Msg;
+import jakarta.persistence.Id;
+import org.springframework.data.domain.Page;
 
 public class ResultHelper {
         public static <T> ResultData<T> created(T data) {
@@ -19,5 +21,21 @@ public class ResultHelper {
             return new Result(true,Msg.OK,"200");
     }
 
+public static Result notFoundErroor() {
+            return new Result(false,Msg.NOT_FOUND, "404");
+}
 
+public static <T> ResultData<CursorResponse<T>> cursor (Page<T> pageData) {
+            CursorResponse<T> cursor = new CursorResponse<>();
+            cursor.setItems(pageData.getContent());
+            cursor.setPage(pageData.getNumber());
+            cursor.setSize(pageData.getSize());
+            cursor.setTotalelements(pageData.getTotalElements());
+            return ResultHelper.success(cursor);
+}
+
+public static <T> ResultData<T> EmailExists() {
+
+            return new ResultData<>(false, Msg.VALIDATE_ERROR,"400",null);
+}
 }
