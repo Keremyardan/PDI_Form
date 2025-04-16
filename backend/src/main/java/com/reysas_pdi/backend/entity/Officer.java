@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Officer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="officer_id")
     private long id;
 
     @Column(name="name", nullable = false)

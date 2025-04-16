@@ -11,7 +11,6 @@ import com.reysas_pdi.backend.dto.response.AdministratorResponse;
 import com.reysas_pdi.backend.entity.Administrator;
 import com.reysas_pdi.backend.entity.Officer;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

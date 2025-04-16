@@ -18,7 +18,8 @@ public class OfficerSaveRequest {
     @Size(min=2, max=50, message = "The character amount should be between 2 and 50")
     private String name;
 
-    @NotNull(message="Customer ID can not be empty")
-    @Min(value=1,message = "Administrator ID value should be greater than 1")
-    private Long officerId;
+
+    @NotNull(message="Officer mail can not be empty")
+    @Size(min=2, max=50, message="The character amount should be between 2 and 50")
+    private String email;
 }

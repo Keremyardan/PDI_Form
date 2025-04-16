@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name="administrator")
 @AllArgsConstructor
@@ -19,11 +21,15 @@ public class Administrator {
     @Column(name ="administrator_id" )
     private long id;
 
+    @Column (name="administrator_email")
+    private String email;
 
     @Column(name="administrator_name", nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="admin_officer_id" ,referencedColumnName = "officer_id", nullable = false)
-    Officer officer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "officer_id", nullable = false)
+    private Officer officer;
+
+
 }
