@@ -1,6 +1,5 @@
 package com.reysas_pdi.backend.business.abstracts;
 
-import com.reysas_pdi.backend.dto.request.AdministratorSaveRequest;
 import com.reysas_pdi.backend.entity.Administrator;
 import org.springframework.data.domain.Page;
 
@@ -9,7 +8,7 @@ import java.util.List;
 public interface IAdministratorService {
     Page<Administrator> cursor(int page, int size);
 
-    Administrator saveAdministrator (Administrator administratorSaveRequest);
+    Administrator save(Administrator administratorSaveRequest);
 
     Administrator update (Long id, Administrator administrator);
 

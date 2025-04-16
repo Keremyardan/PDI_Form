@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-
 @RestController
 @RequestMapping("/administrators")
 public class AdministratorController {
@@ -24,7 +23,8 @@ public class AdministratorController {
     private final IModelMapperService modelMappperService;
     private final IOfficerService officerService;
 
-    public AdministratorController(IAdministratorService administratorService,
+    public AdministratorController(
+            IAdministratorService administratorService,
                                    IModelMapperService modelMapperService,
                                    IOfficerService officerService
     )
@@ -34,7 +34,7 @@ public class AdministratorController {
         this.officerService = officerService;
     }
 
-    @PostMapping("/administrator")
+    @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AdministratorResponse> save(@Valid @RequestBody AdministratorSaveRequest administratorSaveRequest) {
         Administrator saveAdministrator =this.modelMappperService.forRequest().map(administratorSaveRequest, Administrator.class);
@@ -42,7 +42,8 @@ public class AdministratorController {
         Officer officer = this.officerService.get(administratorSaveRequest.getAdministratorId());
         saveAdministrator.setOfficer(officer);
 
-        this.administratorService.saveAdministrator(saveAdministrator);
+        this.administratorService.save(saveAdministrator);
+
         return ResultHelper.created(this.modelMappperService.forResponse().map(saveAdministrator, AdministratorResponse.class));
     }
 }

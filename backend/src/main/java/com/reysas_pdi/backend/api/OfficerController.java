@@ -27,7 +27,7 @@ public class OfficerController {
         this.modelMapperService = modelMapperService;
     }
 
-    @PostMapping("/officer")
+    @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<OfficerResponse> save(@Valid @RequestBody OfficerSaveRequest officerSaveRequest) {
         Officer saveOfficer = this.modelMapperService.forRequest().map(officerSaveRequest, Officer.class);

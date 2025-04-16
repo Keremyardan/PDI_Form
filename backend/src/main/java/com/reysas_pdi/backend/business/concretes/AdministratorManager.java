@@ -28,7 +28,8 @@ public class AdministratorManager implements IAdministratorService {
     }
 
     @Override
-    public Administrator saveAdministrator(Administrator administrator) {
+    public Administrator save(Administrator administrator) {
+
         return this.administratorRepo.save(administrator);
     }
 
