@@ -25,6 +25,6 @@ public class Officer {
     private String email;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="officer_admin_id", referencedColumnName = "administrator_id", nullable = false)
+    @JoinColumn(name="officer_admin_id", referencedColumnName = "administrator_id")
     private Administrator administrator;
 }

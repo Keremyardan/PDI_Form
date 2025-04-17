@@ -31,14 +31,14 @@ public class OfficerController {
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<OfficerResponse> save(@Valid @RequestBody OfficerSaveRequest officerSaveRequest) {
-        Officer saveOfficer = this.modelMapperService.forRequest().map(officerSaveRequest, Officer.class);
+      Officer saveOfficer = this.modelMapperService.forRequest().map(officerSaveRequest, Officer.class);
 
-        ResultData<Officer> result = this.officerService.save(saveOfficer);
+      Administrator administrator =this.administratorService.getById(officerSaveRequest.getAdministratorId());
+      saveOfficer.setAdministrator(administrator);
 
-        if(!result.isSuccess()) {
-            return new ResultData<>(false, result.getMessage(),"400",null);
-        }
-        return ResultHelper.created(this.modelMapperService.forResponse().map(result.getData(),OfficerResponse.class));
+      this.officerService.save(saveOfficer);
+
+      return ResultHelper.created(this.modelMapperService.forResponse().map(saveOfficer, OfficerResponse.class));
     }
 
 }
