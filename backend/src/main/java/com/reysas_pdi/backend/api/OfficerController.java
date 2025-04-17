@@ -8,6 +8,7 @@ import com.reysas_pdi.backend.core.config.utilities.Msg;
 import com.reysas_pdi.backend.core.modelMapper.IModelMapperService;
 import com.reysas_pdi.backend.dto.request.OfficerSaveRequest;
 import com.reysas_pdi.backend.dto.response.OfficerResponse;
+import com.reysas_pdi.backend.entity.Administrator;
 import com.reysas_pdi.backend.entity.Officer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,7 @@ public class OfficerController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<OfficerResponse> save(@Valid @RequestBody OfficerSaveRequest officerSaveRequest) {
         Officer saveOfficer = this.modelMapperService.forRequest().map(officerSaveRequest, Officer.class);
+
         ResultData<Officer> result = this.officerService.save(saveOfficer);
 
         if(!result.isSuccess()) {

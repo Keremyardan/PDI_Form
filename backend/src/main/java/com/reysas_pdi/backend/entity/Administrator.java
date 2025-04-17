@@ -27,9 +27,8 @@ public class Administrator {
     @Column(name="administrator_name", nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "officer_id", nullable = false)
-    private Officer officer;
+    @OneToMany(mappedBy = "administrator",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+    private List <Officer> officer;
 
 
 }

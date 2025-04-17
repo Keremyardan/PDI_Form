@@ -12,9 +12,9 @@ import java.util.List;
 
 @Repository
 public interface AdministratorRepo extends JpaRepository<Administrator, Long> {
-    @Query("SELECT a FROM Administrator a WHERE a.id = :AdministratorId")
-    List<Administrator> findAllByAdministratorId(@Param("administratorId") Long AdministratorId);
-
     @Query("SELECT a FROM Administrator a WHERE LOWER(a.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Administrator> findByNameContainingIgnoreCase(@Param("name") String name);
+
+
+    boolean existsByEmail(String email);
 }

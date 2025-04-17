@@ -18,9 +18,13 @@ public class Officer {
     @Column(name="officer_id")
     private long id;
 
-    @Column(name="name", nullable = false)
+    @Column(name="officer_name", nullable = false)
     private String name;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "officer_email", nullable = false)
     private String email;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="officer_admin_id", referencedColumnName = "administrator_id", nullable = false)
+    private Administrator administrator;
 }

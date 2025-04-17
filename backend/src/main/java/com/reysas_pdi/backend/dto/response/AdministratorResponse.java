@@ -8,6 +8,4 @@ import lombok.*;
 public class AdministratorResponse {
     private Long id;
     private String name;
-    private Long officerId;
-    private String email;
 }
