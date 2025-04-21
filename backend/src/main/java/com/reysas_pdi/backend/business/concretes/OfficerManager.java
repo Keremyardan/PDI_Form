@@ -6,6 +6,7 @@ import com.reysas_pdi.backend.core.config.result.ResultHelper;
 import com.reysas_pdi.backend.core.config.utilities.Msg;
 import com.reysas_pdi.backend.core.exceptions.NotFoundException;
 import com.reysas_pdi.backend.dao.OfficerRepo;
+import com.reysas_pdi.backend.dto.response.officer.OfficerResponse;
 import com.reysas_pdi.backend.entity.Officer;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -25,12 +26,8 @@ public class OfficerManager implements IOfficerService {
 
 
     @Override
-    public ResultData<Officer> save(Officer officer) {
-        if(officerRepo.existsByEmail(officer.getEmail())){
-            return ResultHelper.EmailExists();
-        }
-        Officer savedOfficer = officerRepo.save(officer);
-        return ResultHelper.created(savedOfficer);
+    public Officer saveOfficer(Officer officer) {
+      return this.officerRepo.save(officer);
     }
 
     @Override
@@ -45,14 +42,12 @@ public class OfficerManager implements IOfficerService {
     }
 
     @Override
-    public ResultData<Officer> update(Long id, Officer officer) {
+    public Officer update(Long id, Officer officer) {
         Officer existingOfficer = this.officerRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
-
         existingOfficer.setName(officer.getName());
+        existingOfficer.setEmail(officer.getEmail());
 
-        Officer updatedOfficer = this.officerRepo.save(existingOfficer);
-
-        return ResultHelper.success(updatedOfficer);
+        return this.officerRepo.save(existingOfficer);
     }
 
     @Override

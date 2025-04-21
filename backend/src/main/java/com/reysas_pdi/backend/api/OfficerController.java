@@ -6,6 +6,7 @@ import com.reysas_pdi.backend.core.config.result.ResultData;
 import com.reysas_pdi.backend.core.config.result.ResultHelper;
 import com.reysas_pdi.backend.core.modelMapper.IModelMapperService;
 import com.reysas_pdi.backend.dto.request.officer.OfficerSaveRequest;
+import com.reysas_pdi.backend.dto.request.officer.OfficerUpdateRequest;
 import com.reysas_pdi.backend.dto.response.officer.OfficerResponse;
 import com.reysas_pdi.backend.entity.Administrator;
 import com.reysas_pdi.backend.entity.Officer;
@@ -35,9 +36,19 @@ public class OfficerController {
       Administrator administrator =this.administratorService.getById(officerSaveRequest.getAdministratorId());
       saveOfficer.setAdministrator(administrator);
 
-      this.officerService.save(saveOfficer);
+      this.officerService.saveOfficer(saveOfficer);
 
       return ResultHelper.created(this.modelMapperService.forResponse().map(saveOfficer, OfficerResponse.class));
+    }
+
+    @PutMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<OfficerResponse> update(@PathVariable("id") Long id, @Valid @RequestBody OfficerSaveRequest officerSaveRequest) {
+        Officer officer = this.modelMapperService.forRequest().map(officerSaveRequest, Officer.class);
+
+        Officer updatedOfficer = this.officerService.update(id, officer);
+
+        return ResultHelper.success(this.modelMapperService.forRequest().map(updatedOfficer,OfficerResponse.class));
     }
 
 }
