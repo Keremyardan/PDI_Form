@@ -9,8 +9,6 @@ import com.reysas_pdi.backend.dao.AdministratorRepo;
 import com.reysas_pdi.backend.entity.Administrator;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.beans.Customizer;

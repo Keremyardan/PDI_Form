@@ -6,7 +6,6 @@ import com.reysas_pdi.backend.core.config.result.ResultData;
 import com.reysas_pdi.backend.core.config.result.ResultHelper;
 import com.reysas_pdi.backend.core.modelMapper.IModelMapperService;
 import com.reysas_pdi.backend.dto.request.officer.OfficerSaveRequest;
-import com.reysas_pdi.backend.dto.request.officer.OfficerUpdateRequest;
 import com.reysas_pdi.backend.dto.response.officer.OfficerResponse;
 import com.reysas_pdi.backend.entity.Administrator;
 import com.reysas_pdi.backend.entity.Officer;

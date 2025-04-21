@@ -10,7 +10,6 @@ import com.reysas_pdi.backend.dto.request.administrator.AdministratorUpdateReque
 import com.reysas_pdi.backend.dto.response.administrator.AdministratorResponse;
 import com.reysas_pdi.backend.core.config.result.ResultData;
 import com.reysas_pdi.backend.entity.Administrator;
-import org.apache.catalina.webresources.ClasspathURLStreamHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
