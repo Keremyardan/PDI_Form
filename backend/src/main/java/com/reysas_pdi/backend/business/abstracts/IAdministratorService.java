@@ -11,7 +11,7 @@ public interface IAdministratorService {
 
     ResultData<Administrator> save(Administrator administratorSaveRequest);
 
-    Administrator update (Long id, Administrator administrator);
+    ResultData<Administrator> update (Long id, Administrator administrator);
 
     Administrator getById(Long id);
 

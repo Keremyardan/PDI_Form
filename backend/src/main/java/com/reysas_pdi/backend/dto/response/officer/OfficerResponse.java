@@ -1,4 +1,4 @@
-package com.reysas_pdi.backend.dto.response;
+package com.reysas_pdi.backend.dto.response.officer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

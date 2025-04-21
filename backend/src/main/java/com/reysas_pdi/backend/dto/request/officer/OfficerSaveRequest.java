@@ -1,11 +1,10 @@
-package com.reysas_pdi.backend.dto.request;
+package com.reysas_pdi.backend.dto.request.officer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 

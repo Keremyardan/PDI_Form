@@ -1,9 +1,8 @@
-package com.reysas_pdi.backend.dto.request;
+package com.reysas_pdi.backend.dto.request.administrator;
 
 
 import lombok.*;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 

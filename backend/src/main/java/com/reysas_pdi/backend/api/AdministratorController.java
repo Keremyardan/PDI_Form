@@ -5,11 +5,12 @@ import com.reysas_pdi.backend.business.abstracts.IOfficerService;
 
 import com.reysas_pdi.backend.core.config.result.ResultHelper;
 import com.reysas_pdi.backend.core.modelMapper.IModelMapperService;
-import com.reysas_pdi.backend.dto.request.AdministratorSaveRequest;
-import com.reysas_pdi.backend.dto.response.AdministratorResponse;
+import com.reysas_pdi.backend.dto.request.administrator.AdministratorSaveRequest;
+import com.reysas_pdi.backend.dto.request.administrator.AdministratorUpdateRequest;
+import com.reysas_pdi.backend.dto.response.administrator.AdministratorResponse;
 import com.reysas_pdi.backend.core.config.result.ResultData;
 import com.reysas_pdi.backend.entity.Administrator;
-import com.reysas_pdi.backend.entity.Officer;
+import org.apache.catalina.webresources.ClasspathURLStreamHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,5 +44,20 @@ public class AdministratorController {
             return new ResultData<>(true,result.getMessage(), "200", null);
         }
 return ResultHelper.created(this.modelMappperService.forResponse().map(result.getData(), AdministratorResponse.class));
+    }
+
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<AdministratorResponse> save(@Valid @RequestBody AdministratorUpdateRequest administratorUpdateRequest) {
+        Administrator administrator = this.modelMappperService.forRequest().map(administratorUpdateRequest, Administrator.class);
+
+        ResultData<Administrator> resultData = this.administratorService.update(administratorUpdateRequest.getId(), administrator);
+
+        if(!resultData.isSuccess()) {
+            return new ResultData<>(false,resultData.getMessage(), "400", null);
+        }
+        AdministratorResponse administratorResponse = this.modelMappperService.forResponse().map(resultData.getData(), AdministratorResponse.class);
+
+        return ResultHelper.success(administratorResponse);
     }
 }

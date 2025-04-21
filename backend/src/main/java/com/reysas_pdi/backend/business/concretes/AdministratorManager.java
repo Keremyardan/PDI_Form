@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.beans.Customizer;
 import java.util.List;
 
 @Service
@@ -43,9 +44,18 @@ public class AdministratorManager implements IAdministratorService {
     }
 
     @Override
-    public Administrator update(Long id, Administrator administrator) {
-        return null;
+    public ResultData<Administrator> update(Long id, Administrator administrator) {
+
+        Administrator existingAdministrator = this.administratorRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
+
+existingAdministrator.setName(administrator.getName());
+existingAdministrator.setEmail(administrator.getEmail());
+
+Administrator updatedAdministrator = this.administratorRepo.save(existingAdministrator);
+
+return ResultHelper.success(updatedAdministrator);
     }
+
 
     @Override
     public Administrator getById(Long id) {
