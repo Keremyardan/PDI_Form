@@ -67,7 +67,7 @@ return ResultHelper.success(updatedAdministrator);
 
     @Override
     public List<Administrator> findByNameContainingIgnoreCase(String name) {
-        return List.of();
+        return administratorRepo.findByNameContainingIgnoreCase(name);
     }
 
     @Override
