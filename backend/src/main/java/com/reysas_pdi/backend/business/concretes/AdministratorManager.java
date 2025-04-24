@@ -62,7 +62,8 @@ return ResultHelper.success(updatedAdministrator);
 
     @Override
     public void delete(Long id) {
-
+       Administrator administrator = this.administratorRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
+        this.administratorRepo.delete(administrator);
     }
 
     @Override
