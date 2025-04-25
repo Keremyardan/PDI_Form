@@ -5,6 +5,7 @@ import com.reysas_pdi.backend.core.config.utilities.Msg;
 import com.reysas_pdi.backend.core.exceptions.NotFoundException;
 import com.reysas_pdi.backend.dao.OfficerRepo;
 import com.reysas_pdi.backend.entity.Officer;
+import com.reysas_pdi.backend.entity.UserRole;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class OfficerManager implements IOfficerService {
 
     @Override
     public Officer saveOfficer(Officer officer) {
+        officer.setRole(UserRole.OFFICER);
       return this.officerRepo.save(officer);
     }
 

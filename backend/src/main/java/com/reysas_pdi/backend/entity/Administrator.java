@@ -30,5 +30,8 @@ public class Administrator {
     @OneToMany(mappedBy = "administrator",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
     private List <Officer> officer;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private UserRole userRole = UserRole.ADMIN;
 
 }

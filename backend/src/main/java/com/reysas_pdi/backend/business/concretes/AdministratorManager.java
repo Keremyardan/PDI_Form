@@ -7,6 +7,7 @@ import com.reysas_pdi.backend.core.config.utilities.Msg;
 import com.reysas_pdi.backend.core.exceptions.NotFoundException;
 import com.reysas_pdi.backend.dao.AdministratorRepo;
 import com.reysas_pdi.backend.entity.Administrator;
+import com.reysas_pdi.backend.entity.UserRole;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class AdministratorManager implements IAdministratorService {
             return ResultHelper.EmailExists();
         }
 
+        administrator.setUserRole(UserRole.ADMIN);
         Administrator savedAdministrator = administratorRepo.save(administrator);
         return ResultHelper.created(savedAdministrator);
     }

@@ -27,4 +27,8 @@ public class Officer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="officer_admin_id", referencedColumnName = "administrator_id")
     private Administrator administrator;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="role", nullable = false)
+    private UserRole role = UserRole.OFFICER;
 }
