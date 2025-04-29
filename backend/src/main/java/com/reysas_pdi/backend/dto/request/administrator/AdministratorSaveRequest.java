@@ -17,4 +17,8 @@ public class AdministratorSaveRequest {
     @NotNull(message="Email can not be empty")
     @Size(min=2, max=50, message = "Email character amount should be between 2 and 50 characters")
     private String email;
+
+    @NotNull(message = "Password can not be empty")
+    @Size(min=1, max=2, message = "Password character amount should be between 2 and 50 characters")
+    private String password;
 }

@@ -27,6 +27,9 @@ public class Administrator {
     @Column(name="administrator_name", nullable = false)
     private String name;
 
+    @Column(name="administrator_password", nullable = false)
+    private String password;
+
     @OneToMany(mappedBy = "administrator",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
     private List <Officer> officer;
 
