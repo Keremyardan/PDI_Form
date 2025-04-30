@@ -24,11 +24,14 @@ public class Officer {
     @Column(name = "officer_email", nullable = false)
     private String email;
 
+    @Column(name = "officer_password" , nullable = false)
+    private String password;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="officer_admin_id", referencedColumnName = "administrator_id")
     private Administrator administrator;
 
     @Enumerated(EnumType.STRING)
     @Column(name="role", nullable = false)
-    private UserRole role = UserRole.OFFICER;
+    private UserRole userRole = UserRole.OFFICER;
 }

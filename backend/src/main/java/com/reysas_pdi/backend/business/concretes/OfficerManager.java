@@ -25,7 +25,7 @@ public class OfficerManager implements IOfficerService {
 
     @Override
     public Officer saveOfficer(Officer officer) {
-        officer.setRole(UserRole.OFFICER);
+        officer.setUserRole(UserRole.OFFICER);
       return this.officerRepo.save(officer);
     }
 
