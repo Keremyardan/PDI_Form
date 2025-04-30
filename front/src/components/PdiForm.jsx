@@ -19,11 +19,41 @@ function PdiForm() {
         }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData);
-        alert('Form başarıyla gönderildi!');
-    };
+
+        const filteredFormData = Object.fromEntries(
+            Object.entries(formData).filter(([key,value]) => {
+                if (typeof value === "boolean") return value === true;
+                if (typeof value === "string") return value.trim() !== "";
+                return false;
+            })
+        );
+
+        const payLoad =  {
+            seletedFields:filteredFormData,
+            
+        };
+
+        try {
+            const response = await fetch("http://localhost:8080/api/pdi-form", {
+                method:POST,
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body:JSON.stringify(payLoad)
+            });
+            if(!response.ok) {
+                throw new error("Form gönderimi başarısız")
+            }
+            alert ("Form başarıyla gönderildi"),
+            console.log("Gönderilen veri:", payLoad)
+        } catch (error) {
+            console.log("Hata", error)
+            alert("Bir hata oluştu")
+        }
+    }
+
     return (
         <div className="main-form">
             <div className="pdi-form1">
@@ -48,10 +78,10 @@ function PdiForm() {
                     </div>
                 </div>
                 <div className="second-row">
-                    <div className="second-cell"><span className="cell-text">PDI Yeri: </span><textarea className='kmbox'/></div>
-                    <div className="second-cell"><span className="cell-text">Model: </span><textarea className='kmbox'/></div>
-                    <div className="second-cell"><span className="cell-text">Vin:</span><textarea className='kmbox'/></div>
-                    <div className="second-cell"><span className="cell-text">KM Bilgisi: </span><textarea className='kmbox'/></div>
+                    <div className="second-cell"><span className="cell-text">PDI Yeri: </span><textarea className='kmbox' /></div>
+                    <div className="second-cell"><span className="cell-text">Model: </span><textarea className='kmbox' /></div>
+                    <div className="second-cell"><span className="cell-text">Vin:</span><textarea className='kmbox' /></div>
+                    <div className="second-cell"><span className="cell-text">KM Bilgisi: </span><textarea className='kmbox' /></div>
                     <div className="second-cell"><span className="cell-text">Kontrol Tarihi: </span><input type="date" /></div>
                 </div>
                 <div className="third-row">
@@ -227,13 +257,13 @@ function PdiForm() {
                                 <text className='form2-sixth-row-text'>
                                     &nbsp;&nbsp;İlave Notlar:
                                 </text>
-                                <textarea className ='additionalNotes'
+                                <textarea className='additionalNotes'
                                     name="additionalNotes"
                                     value={formData.additionalNotes || ''}
                                     onChange={handleChange}
                                     placeholder="Ek notlarınızı buraya yazabilirsiniz..."
-                                    
-                                    
+
+
                                 />
                             </div>
 
@@ -246,7 +276,7 @@ function PdiForm() {
                             <label>
                                 <input
                                     type="checkbox"
-                                    name="gurasuyon"
+                                    name="gurasyon"
                                     checked={formData.gurasyon || false}
                                     onChange={handleChange}
                                 />
@@ -257,7 +287,7 @@ function PdiForm() {
                                 <input
                                     type="checkbox"
                                     name="firstaid"
-                                    checked={formData.gurasyon || false}
+                                    checked={formData.firstaid || false}
                                     onChange={handleChange}
                                 />
 
