@@ -4,15 +4,21 @@ package com.reysas_pdi.backend.business.concretes;
 import com.reysas_pdi.backend.business.abstracts.IPdiFormService;
 import com.reysas_pdi.backend.core.config.result.ResultData;
 import com.reysas_pdi.backend.core.config.result.ResultHelper;
+import com.reysas_pdi.backend.dao.OfficerRepo;
 import com.reysas_pdi.backend.dao.PdiFormRepo;
 import com.reysas_pdi.backend.dto.request.pdiform.PdiFormSaveRequest;
+import com.reysas_pdi.backend.entity.Officer;
 import com.reysas_pdi.backend.entity.PdiForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class PdiFormManager implements IPdiFormService {
+
+    @Autowired
+    private OfficerRepo officerRepo;
 
     private final PdiFormRepo pdiFormRepo;
 
@@ -72,5 +78,13 @@ public class PdiFormManager implements IPdiFormService {
     @Override
     public List<PdiForm> findAll() {
         return pdiFormRepo.findAll();
+    }
+
+    @Override
+    public List<PdiForm> findByOfficer(Long officerId) {
+        Officer officer = officerRepo.findById(officerId)
+                .orElseThrow(() -> new RuntimeException("Officer not found"));
+
+        return pdiFormRepo.findByOfficer(officer);
     }
 }

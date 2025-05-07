@@ -1,37 +1,25 @@
 package com.reysas_pdi.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
-@Table(name="officer")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class Officer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="officer_id")
-    private long id;
+@Table(name="officer")
 
-    @Column(name="officer_name", nullable = false)
-    private String name;
-
-    @Column(name = "officer_email", nullable = false)
-    private String email;
-
-    @Column(name = "officer_password" , nullable = false)
-    private String password;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="officer_admin_id", referencedColumnName = "administrator_id")
+public class Officer  extends  SuperUser{
+   @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "administrator_id", referencedColumnName = "id")
     private Administrator administrator;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name="role", nullable = false)
-    private UserRole userRole = UserRole.OFFICER;
+    @OneToMany(mappedBy = "officer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PdiForm> pdiForms;
+
+
+    public Officer () {
+       this.userRole = userRole.OFFICER;
+   }
 }

@@ -1,5 +1,6 @@
 package com.reysas_pdi.backend.dao;
 
+import com.reysas_pdi.backend.entity.Officer;
 import com.reysas_pdi.backend.entity.PdiForm;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,6 +14,9 @@ public interface PdiFormRepo extends JpaRepository<PdiForm, Long> {
     List<PdiForm> findByModelContainingIgnoreCase(String model);
 
     boolean existsByVin(String vin);
+
+    List<PdiForm> findByOfficer(Officer officer);
+
 
 
 }

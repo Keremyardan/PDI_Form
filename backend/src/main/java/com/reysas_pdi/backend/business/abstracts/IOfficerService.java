@@ -15,4 +15,6 @@ public interface IOfficerService {
     Page<Officer> cursor (int page, int size);
 
     List<Officer> getOfficersByName(String name);
+
+
 }

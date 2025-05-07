@@ -20,4 +20,7 @@ public interface IPdiFormService {
 
     List<PdiForm> findByModel(String model);
     List<PdiForm> findAll();
+
+    List<PdiForm> findByOfficer(Long officerId);
+
 }

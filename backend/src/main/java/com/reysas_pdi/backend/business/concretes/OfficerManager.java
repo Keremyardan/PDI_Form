@@ -8,6 +8,7 @@ import com.reysas_pdi.backend.entity.Officer;
 import com.reysas_pdi.backend.entity.UserRole;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,17 +17,20 @@ import java.util.List;
 public class OfficerManager implements IOfficerService {
     private final OfficerRepo officerRepo;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public OfficerManager(OfficerRepo officerRepo, ModelMapper modelMapper) {
+    public OfficerManager(OfficerRepo officerRepo, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.officerRepo = officerRepo;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
     @Override
     public Officer saveOfficer(Officer officer) {
         officer.setUserRole(UserRole.OFFICER);
-      return this.officerRepo.save(officer);
+        officer.setPassword(passwordEncoder.encode(officer.getPassword()));
+        return this.officerRepo.save(officer);
     }
 
     @Override

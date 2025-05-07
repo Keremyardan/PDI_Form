@@ -13,6 +13,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 public class PdiForm {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +25,7 @@ public class PdiForm {
     private String kontrolTarihi;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "functional_checks", joinColumns = @JoinColumn(name= "pdi_form_id"))
+    @CollectionTable(name = "functional_checks", joinColumns = @JoinColumn(name = "pdi_form_id"))
     @MapKeyColumn(name = "check_name")
     @Column(name = "check_value")
     private Map<String, Boolean> functionalChecks;
@@ -36,4 +37,9 @@ public class PdiForm {
     private Boolean gurasyon;
     private Boolean firstAid;
     private String additionalNotes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "officer_id")
+    private Officer officer;
+
 }
