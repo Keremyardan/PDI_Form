@@ -36,13 +36,11 @@
         @PostMapping("/save")
         @ResponseStatus(HttpStatus.CREATED)
         public ResultData<AdministratorResponse> save(@Valid @RequestBody AdministratorSaveRequest administratorSaveRequest) {
-            Administrator saveAdministrator = this.modelMappperService.forRequest().map(administratorSaveRequest, Administrator.class);
-            ResultData<Administrator> result = this.administratorService.save(saveAdministrator);
+            Administrator administrator = this.modelMappperService.forRequest().map(administratorSaveRequest, Administrator.class);
 
-            if(result.isSuccess()) {
-                return new ResultData<>(true,result.getMessage(), "200", null);
-            }
-    return ResultHelper.created(this.modelMappperService.forResponse().map(result.getData(), AdministratorResponse.class));
+            Administrator saveAdmin = this.administratorService.save(administrator);
+
+            return ResultHelper.created(this.modelMappperService.forResponse().map(saveAdmin, AdministratorResponse.class));
         }
 
         @PutMapping("/update")

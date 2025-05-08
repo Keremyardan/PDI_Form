@@ -12,14 +12,15 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain fiterChain(HttpSecurity http) throws Exception {
-        http
+        http.cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/officers/save",
                                 "/officers/update/**",
                                 "/administrators/save",
-                                "/administrators/update/**"
+                                "/administrators/update/**",
+                                "/auth/login"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

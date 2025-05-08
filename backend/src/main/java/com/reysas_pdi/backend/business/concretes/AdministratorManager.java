@@ -10,6 +10,7 @@ import com.reysas_pdi.backend.entity.Administrator;
 import com.reysas_pdi.backend.entity.UserRole;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.beans.Customizer;
@@ -20,10 +21,12 @@ public class AdministratorManager implements IAdministratorService {
 
     private final AdministratorRepo administratorRepo;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public AdministratorManager(AdministratorRepo administratorRepo, ModelMapper modelMapper) {
+    public AdministratorManager(AdministratorRepo administratorRepo, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.administratorRepo = administratorRepo;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -33,14 +36,10 @@ public class AdministratorManager implements IAdministratorService {
     }
 
     @Override
-    public ResultData<Administrator> save(Administrator administrator) {
-        if(administratorRepo.existsByEmail(administrator.getEmail())) {
-            return ResultHelper.EmailExists();
-        }
-
-        administrator.setUserRole(UserRole.ADMIN);
-        Administrator savedAdministrator = administratorRepo.save(administrator);
-        return ResultHelper.created(savedAdministrator);
+    public Administrator save(Administrator administrator) {
+       administrator.setUserRole(UserRole.ADMIN);
+       administrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
+       return this.administratorRepo.save(administrator);
     }
 
     @Override

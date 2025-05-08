@@ -9,7 +9,7 @@ import java.util.List;
 public interface IAdministratorService {
     Page<Administrator> cursor(int page, int size);
 
-    ResultData<Administrator> save(Administrator administratorSaveRequest);
+    Administrator save(Administrator administratorSaveRequest);
 
     ResultData<Administrator> update (Long id, Administrator administrator);
 
