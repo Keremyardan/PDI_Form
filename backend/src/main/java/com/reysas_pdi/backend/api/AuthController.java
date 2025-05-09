@@ -9,6 +9,7 @@ import com.reysas_pdi.backend.dto.response.LoginResponse;
 import com.reysas_pdi.backend.entity.Administrator;
 import com.reysas_pdi.backend.entity.Officer;
 import com.reysas_pdi.backend.entity.SuperUser;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,33 +22,41 @@ import java.util.Optional;
 public class AuthController {
     private final AdministratorRepo administratorRepo;
     private final OfficerRepo officerRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthController(AdministratorRepo administratorRepo, OfficerRepo officerRepo) {
+    public AuthController(AdministratorRepo administratorRepo, OfficerRepo officerRepo, PasswordEncoder passwordEncoder) {
         this.administratorRepo = administratorRepo;
         this.officerRepo = officerRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
     public ResultData<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-        Optional<? extends SuperUser> userOpt =
-                administratorRepo.findAll().stream()
-                        .filter(u -> u.getEmail().equalsIgnoreCase(loginRequest.getEmail()) && u.getPassword().equals(loginRequest.getPassword()))
-                        .findFirst()
-                        .map(SuperUser.class::cast);
+        Optional <Administrator> adminOpt = administratorRepo.findAll().stream().filter(u -> u.getEmail().equalsIgnoreCase(loginRequest.getEmail()) && passwordEncoder.matches(loginRequest.getPassword(), u.getPassword())).findFirst();
 
-        if (userOpt.isEmpty()) {
-            userOpt = officerRepo.findAll().stream()
-                    .filter(u -> u.getEmail().equalsIgnoreCase(loginRequest.getEmail()) && u.getPassword().equals(loginRequest.getPassword()))
-                    .findFirst()
-                    .map(SuperUser.class::cast);
+        if(adminOpt.isPresent()) {
+            Administrator admin = adminOpt.get();
+            return ResultHelper.success(new LoginResponse(
+                    admin.getId(),
+                    admin.getName(),
+                    admin.getEmail(),
+                    admin.getUserRole().name()));
         }
 
-        if (userOpt.isPresent()) {
-            SuperUser user = userOpt.get();
-            return ResultHelper.success(new LoginResponse(user.getId(), user.getName(), user.getEmail(), user.getUserRole().name()));
-        }
+            Optional<Officer> officerOpt = officerRepo.findAll().stream().filter(u -> u.getEmail().equalsIgnoreCase(loginRequest.getEmail()) && passwordEncoder.matches(loginRequest.getPassword(), u.getPassword())).findFirst();
 
-        return new ResultData<>(false, "Geçersiz mail ya da şifre bilgisi", "401", null);
+            if(officerOpt.isPresent()) {
+                Officer officer = officerOpt.get();
+                return  ResultHelper.success(new LoginResponse(
+                        officer.getId(),
+                        officer.getName(),
+                        officer.getEmail(),
+                        officer.getUserRole().name()
+                ));
+
+
+            }
+        return new ResultData<>(false, "Geçersiz mail ya da şifre", "401", null);
     }
 
 }
