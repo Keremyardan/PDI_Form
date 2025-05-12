@@ -5,11 +5,16 @@ import SvgCar from "./SvgCar"
 
 function PdiForm() {
     const [formData, setFormData] = useState({});
+    const [hoveredPart, setHoveredPart] = useState(null);
 
     const handlePartHover = (partId) => {
         setHoveredPart(partId);
         console.log(`Hovered on part: ${partId}`);
     };
+
+    const handlePartClick = (partId) => {
+        console.log("part clicked")
+    }
 
     const handleChange = (event) => {
         const { name, value, type, checked } = event.target;
@@ -37,14 +42,14 @@ function PdiForm() {
 
         try {
             const response = await fetch("http://localhost:8080/api/pdi-form", {
-                method:POST,
+                method:"POST",
                 headers: {
                     "Content-Type" : "application/json"
                 },
                 body:JSON.stringify(payLoad)
             });
             if(!response.ok) {
-                throw new error("Form gönderimi başarısız")
+                throw new Error("Form gönderimi başarısız")
             }
             alert ("Form başarıyla gönderildi"),
             console.log("Gönderilen veri:", payLoad)
@@ -91,7 +96,7 @@ function PdiForm() {
                 <div className="fourth-row">
                     <div className="fifth-cell">HASAR TANIMI</div>
                     <div className="sixth-cell">
-                        <SvgCar className="image" onPartHover={handlePartHover} />
+                        <SvgCar className="image" onPartHover={handlePartHover} onPartClick={handlePartClick}/>
                     </div>
 
                     <div className="lines">

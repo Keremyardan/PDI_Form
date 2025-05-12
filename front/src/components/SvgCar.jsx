@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-const SvgCar = ({ onPartHover }) => {
+const SvgCar = ({ onPartHover, onPartClick }) => {
     const [hoveredPart, setHoveredPart] = useState(null);
+    const [clickedPart, setClickedPart] = useState(null);
 
     const handleMouseEnter = (partId) => {
         setHoveredPart(partId);
@@ -17,13 +18,19 @@ const SvgCar = ({ onPartHover }) => {
         }
     };
 
-    const getPartStyle = (partId) => {
-        if (hoveredPart === partId) {
+    const handleClick = (partId) => {
+        setClickedPart(partId === clickedPart ? null : partId);
+        if(onPartClick) {
+            onPartClick(partId);
+        }
+    }
+
+const getPartStyle = (partId) => {
+        if (clickedPart === partId || hoveredPart === partId) {
             return { fill: '#F44336', cursor: 'pointer', transition: 'fill 0.2s ease' };
         }
         return { cursor: 'pointer', transition: 'fill 0.2s ease' };
     };
-
     return (
         <svg version="1.1" id="katman_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             x="0px" y="0px" viewBox="0 0 338.2 411.9" style={{ enableBackground: 'new 0 0 338.2 411.9' }} xmlSpace="preserve"
@@ -61,6 +68,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('solArkaCamurluk')}
                     onMouseEnter={() => handleMouseEnter('solArkaCamurluk')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('solArkaCamurluk')}
                 />
                 <path
                     id="solArkaKapi"
@@ -69,6 +77,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('solArkaKapi')}
                     onMouseEnter={() => handleMouseEnter('solArkaKapi')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('solArkaKapi')}
                 />
                 <path
                     id="solOnKapi"
@@ -77,6 +86,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('solOnKapi')}
                     onMouseEnter={() => handleMouseEnter('solOnKapi')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('solOnKapi')}
                 />
                 <path
                     id="solOnCamurluk"
@@ -85,6 +95,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('solOnCamurluk')}
                     onMouseEnter={() => handleMouseEnter('solOnCamurluk')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('solOnCamurluk')}
                 />
                 <path id="sagKomple" class="st0"
                     d="M306.1,318.4v28.5c0,0-5-0.3-7.8,6.8h-14.7l-3.8-3.8h-23.4c0,0-36.7-42.6-36.7-76v-56
@@ -113,7 +124,7 @@ const SvgCar = ({ onPartHover }) => {
 
                     style={{ pointerEvents: 'none' }}
                 />
-                <polygon className="st1" points="75.6,291.5 75.6,308.5 108.3,278.1 " onMouseEnter={() => handleMouseEnter('solArkaKelebek')} onMouseLeave={handleMouseLeave} style={{ pointerEvents: 'none' }} />
+                <polygon className="st1" points="75.6,291.5 75.6,308.5 108.3,278.1 " onMouseEnter={() => onPartHover('solArkaKelebek')} onMouseLeave={handleMouseLeave} style={{ pointerEvents: 'none' }} />
                 <path className="st1" d="M75.6,141.8c0,0,31.3,44.1,32.7,76.2l-32.7-7.3V141.8z" onMouseEnter={() => handleMouseEnter('solOnCam')} onMouseLeave={handleMouseLeave} style={{ pointerEvents: 'none' }} />
             </g>
 
@@ -126,6 +137,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('sagArkaCamurluk')}
                     onMouseEnter={() => handleMouseEnter('sagArkaCamurluk')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('sagArkaCamurluk')}
                 />
                 <path
                     id="sagArkaKapi"
@@ -134,6 +146,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('sagArkaKapi')}
                     onMouseEnter={() => handleMouseEnter('sagArkaKapi')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('sagArkaKapi')}
                 />
                 <path
                     id="sagOnKapi"
@@ -142,6 +155,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('sagOnKapi')}
                     onMouseEnter={() => handleMouseEnter('sagOnKapi')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('sagOnKapi')}
                 />
                 <path
                     id="sagOnCamurluk"
@@ -150,6 +164,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('sagOnCamurluk')}
                     onMouseEnter={() => handleMouseEnter('sagOnCamurluk')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('sagOnCamurluk')}
                 />
                 <circle
                     id="sagOnTeker"
@@ -183,6 +198,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('onTampon')}
                     onMouseEnter={() => handleMouseEnter('onTampon')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('onTampon')}
                 />
                 <path
                     id="arkaTampon"
@@ -191,6 +207,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('arkaTampon')}
                     onMouseEnter={() => handleMouseEnter('arkaTampon')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('arkaTampon')}
                 />
             </g>
 
@@ -209,6 +226,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('onKaput')}
                     onMouseEnter={() => handleMouseEnter('onKaput')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('onKaput')}
                 />
                 <path
                     id="arkaBagaj"
@@ -217,6 +235,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('arkaBagaj')}
                     onMouseEnter={() => handleMouseEnter('arkaBagaj')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('arkaBagaj')}
                 />
             </g>
 
@@ -229,6 +248,7 @@ const SvgCar = ({ onPartHover }) => {
                     style={getPartStyle('tavan')}
                     onMouseEnter={() => handleMouseEnter('tavan')}
                     onMouseLeave={handleMouseLeave}
+                    onClick={() => handleClick('tavan')}   
                 />
             </g>
 
