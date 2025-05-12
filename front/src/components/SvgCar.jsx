@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const SvgCar = ({ onPartHover, onPartClick }) => {
-    const [hoveredPart, setHoveredPart] = useState(null);
+    const [hoveredPart, setHoveredPart] = useState([]);
     const [clickedPart, setClickedPart] = useState(null);
 
     const handleMouseEnter = (partId) => {

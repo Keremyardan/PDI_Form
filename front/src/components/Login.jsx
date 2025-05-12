@@ -47,7 +47,7 @@ function Login({ onLogin }) {
             <h2>Giriş Yap</h2>
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
-                    <label>Kullanıcı Adı</label>
+                    <label className='box-text'>Kullanıcı Adı</label>
                     <input
                         type="text"
                         value={username}
@@ -56,7 +56,7 @@ function Login({ onLogin }) {
                     />
                 </div>
                 <div className="input-group">
-                    <label>Şifre</label>
+                     <label className='box-text'>Şifre</label>
                     <input
                         type="password"
                         value={password}
