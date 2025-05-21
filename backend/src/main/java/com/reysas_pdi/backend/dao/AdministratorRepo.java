@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -15,6 +16,7 @@ public interface AdministratorRepo extends JpaRepository<Administrator, Long> {
     @Query("SELECT a FROM Administrator a WHERE LOWER(a.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Administrator> findByNameContainingIgnoreCase(@Param("name") String name);
 
+    Optional<Administrator> findByEmail(String email);
 
     boolean existsByEmail(String email);
 }
