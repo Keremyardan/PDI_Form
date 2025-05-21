@@ -23,7 +23,7 @@ public class UserDetailsService implements org.springframework.security.core.use
                 .map(admin -> User.builder()
                         .username(admin.getEmail())
                         .password(admin.getPassword())
-                        .roles(admin.getUserRole().name())
+                        .authorities("ROLE_" + admin.getUserRole().name())
                         .build())
 
 
@@ -31,7 +31,7 @@ public class UserDetailsService implements org.springframework.security.core.use
                         .map(officer -> User.builder()
                                 .username(officer.getEmail())
                                 .password(officer.getPassword())
-                                .roles(officer.getUserRole().name())
+                                .authorities("ROLE_" + officer.getUserRole().name())
                                 .build())
                         .orElseThrow(() -> new UsernameNotFoundException("Kullanıcı bulunamadı: " + username)));
     }
