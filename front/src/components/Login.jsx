@@ -3,7 +3,7 @@ import './Login.css';
 import { useNavigate } from 'react-router-dom';
 
 function Login({ onLogin }) {
-    const [username, setUsername] = useState('');
+      const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
@@ -11,32 +11,39 @@ function Login({ onLogin }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (username === '' || password === '') {
+        setError('');
+
+        if (username.trim() === '' || password.trim() === '') {
             setError('Kullanıcı adı ve şifre boş bırakılamaz!');
             return;
         }
-    
+
+        const encodedCredentials = btoa(`${username}:${password}`);
+        localStorage.setItem("auth", encodedCredentials); // 💾 Şifreyi base64 sakla
+
         try {
             const response = await fetch('http://localhost:8080/auth/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${encodedCredentials}`
                 },
                 body: JSON.stringify({
                     email: username,
                     password: password
                 })
             });
-    
+
             const data = await response.json();
-    
-            if (data.success) {
-                onLogin(data.data.role);
+
+            if (response.ok && data.success) {
+                onLogin(data.data.role); // örn: ADMIN / OFFICER
                 navigate("/pdi-form");
             } else {
                 setError(data.message || 'Giriş başarısız.');
             }
         } catch (err) {
+            console.error("Login error:", err);
             setError("Sunucuya bağlanılamadı.");
         }
     };
