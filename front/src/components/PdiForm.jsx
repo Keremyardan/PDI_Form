@@ -4,7 +4,7 @@ import logo from "../assets/cherylogo.svg"
 import SvgCar from "./SvgCar"
 
 function PdiForm() {
-    const [formData, setFormData] = useState({});
+     const [formData, setFormData] = useState({});
     const [hoveredPart, setHoveredPart] = useState(null);
 
     const handlePartHover = (partId) => {
@@ -13,13 +13,13 @@ function PdiForm() {
     };
 
     const handlePartClick = (partId) => {
-        console.log("part clicked")
-    }
+        console.log("part clicked");
+    };
 
     const handleChange = (event) => {
         const { name, value, type, checked } = event.target;
-        setFormData(prevFormData => ({
-            ...prevFormData,
+        setFormData(prev => ({
+            ...prev,
             [name]: type === 'checkbox' ? checked : value
         }));
     };
@@ -28,36 +28,47 @@ function PdiForm() {
         event.preventDefault();
 
         const filteredFormData = Object.fromEntries(
-            Object.entries(formData).filter(([key,value]) => {
-                if (typeof value === "boolean") return value === true;
+            Object.entries(formData).filter(([_, value]) => {
+                if (typeof value === "boolean") return value;
                 if (typeof value === "string") return value.trim() !== "";
                 return false;
             })
         );
 
-        const payLoad =  {
-            seletedFields:filteredFormData,
-            
-        };
+      const credentials = localStorage.getItem("auth");
 
-        try {
-            const response = await fetch("http://localhost:8080/api/pdi-form", {
-                method:"POST",
-                headers: {
-                    "Content-Type" : "application/json"
-                },
-                body:JSON.stringify(payLoad)
-            });
-            if(!response.ok) {
-                throw new Error("Form gönderimi başarısız")
-            }
-            alert ("Form başarıyla gönderildi"),
-            console.log("Gönderilen veri:", payLoad)
-        } catch (error) {
-            console.log("Hata", error)
-            alert("Bir hata oluştu")
-        }
+if (!credentials) {
+    alert("Lütfen önce giriş yapın.");
+    return;
+}
+
+// Base64 encoding the credentials (username:password)
+const base64Credentials = btoa(credentials); // 'username:password' formatında
+
+try {
+   const response = await fetch("http://localhost:8080/pdi-form/submit", {
+    method: 'POST',
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Basic ${base64Credentials}` // Authorization header'ı ekleyin
+    },
+    credentials: "include", // Cookies (session) gönderme
+    body: JSON.stringify(filteredFormData)
+});
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Sunucu Hatası:", errorText);
+        throw new Error(`Form gönderimi başarısız: ${response.status} - ${errorText}`);
     }
+
+    alert("Form başarıyla gönderildi");
+} catch (error) {
+    console.error("Hata", error);
+    alert(`Bir hata oluştu: ${error.message}`);
+}
+
+    };
 
     return (
         <div className="main-form">
@@ -83,7 +94,7 @@ function PdiForm() {
                     </div>
                 </div>
                 <div className="second-row">
-                    <div className="second-cell"><span className="cell-text">PDI Yeri: </span><textarea className='kmbox' /></div>
+                    <div className="second-cell"><span className="cell-text" >PDI Yeri: </span><textarea  className='kmbox' /></div>
                     <div className="second-cell"><span className="cell-text">Model: </span><textarea className='kmbox' /></div>
                     <div className="second-cell"><span className="cell-text">Vin:</span><textarea className='kmbox' /></div>
                     <div className="second-cell"><span className="cell-text">KM Bilgisi: </span><textarea className='kmbox' /></div>
