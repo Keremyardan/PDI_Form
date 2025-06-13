@@ -2,6 +2,8 @@ package com.reysas_pdi.backend.api;
 
 import com.reysas_pdi.backend.business.abstracts.IPdiFormService;
 import com.reysas_pdi.backend.business.concretes.PdiFormManager;
+import com.reysas_pdi.backend.core.config.result.ResultData;
+import com.reysas_pdi.backend.dto.request.pdiform.PdiFormSaveRequest;
 import com.reysas_pdi.backend.entity.PdiForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,18 @@ public class PdiFormController {
         this.iPdiFormService = iPdiFormService;
     }
 
+    @PostMapping("/submit")
+    @PreAuthorize("hasAnyRole('ADMIN','OFFICER')")
+    public ResponseEntity<ResultData<PdiForm>> submitForm(@RequestBody PdiFormSaveRequest request) {
+        ResultData<PdiForm> result = iPdiFormService.save(request);
+        return ResponseEntity.status(201).body(result);
+    }
+
+
+
+
+
+
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','OFFICER')")
     public ResponseEntity<List<PdiForm>> findAll() {
@@ -31,5 +45,7 @@ public class PdiFormController {
     public ResponseEntity<List<PdiForm>> getByOfficer(@PathVariable Long officerId) {
         return ResponseEntity.ok(iPdiFormService.findByOfficer(officerId));
     }
+
+
 
 }
