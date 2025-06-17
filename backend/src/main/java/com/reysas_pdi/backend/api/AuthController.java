@@ -8,7 +8,6 @@ import com.reysas_pdi.backend.dto.request.LoginRequest;
 import com.reysas_pdi.backend.dto.response.LoginResponse;
 import com.reysas_pdi.backend.entity.Administrator;
 import com.reysas_pdi.backend.entity.Officer;
-import com.reysas_pdi.backend.entity.SuperUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
