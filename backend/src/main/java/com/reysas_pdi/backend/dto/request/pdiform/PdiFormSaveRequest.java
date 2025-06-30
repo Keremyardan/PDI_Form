@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -45,4 +46,6 @@ public class PdiFormSaveRequest {
     private Boolean firstaid;
 
     private String additionalNotes;
+
+    private List<String> selectedParts;
 }

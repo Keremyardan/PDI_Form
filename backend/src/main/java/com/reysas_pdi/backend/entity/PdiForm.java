@@ -3,6 +3,7 @@ package com.reysas_pdi.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -24,11 +25,6 @@ public class PdiForm {
     private String kmBilgisi;
     private String kontrolTarihi;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "functional_checks", joinColumns = @JoinColumn(name = "pdi_form_id"))
-    @MapKeyColumn(name = "check_name")
-    @Column(name = "check_value")
-    private Map<String, Boolean> functionalChecks;
 
     private String fuelLitres1;
     private String fuelLitres2;
@@ -41,5 +37,10 @@ public class PdiForm {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "officer_id")
     private Officer officer;
+
+    @ElementCollection
+    @CollectionTable(name = "selected_parts", joinColumns = @JoinColumn(name="pdi_form_id"))
+    @Column(name ="part_name")
+    private List<String> selectedParts;
 
 }

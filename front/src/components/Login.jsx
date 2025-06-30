@@ -19,33 +19,40 @@ function Login({ onLogin }) {
         }
 
         const encodedCredentials = btoa(`${username}:${password}`);
-        localStorage.setItem("auth", encodedCredentials); // 💾 Şifreyi base64 sakla
+        localStorage.setItem("auth", encodedCredentials);
 
-        try {
-            const response = await fetch('http://localhost:8080/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Basic ${encodedCredentials}`
-                },
-                body: JSON.stringify({
-                    email: username,
-                    password: password
-                })
-            });
+try {
+    const response = await fetch('http://localhost:8080/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encodedCredentials}`
+        },
+        body: JSON.stringify({
+            email: username,
+            password: password
+        })
+    });
 
-            const data = await response.json();
+    let data = null;
+    const contentType = response.headers.get("content-type");
 
-            if (response.ok && data.success) {
-                onLogin(data.data.role); // örn: ADMIN / OFFICER
-                navigate("/pdi-form");
-            } else {
-                setError(data.message || 'Giriş başarısız.');
-            }
-        } catch (err) {
-            console.error("Login error:", err);
-            setError("Sunucuya bağlanılamadı.");
-        }
+    if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+    }
+
+    if (response.ok && data && data.success) {
+        onLogin(data.data.role);
+        navigate("/pdi-form");
+    } else {
+        setError((data && data.message) || `Giriş başarısız! Status: ${response.status}`);
+    }
+
+} catch (err) {
+    console.error("Login error:", err);
+    setError("Sunucuya bağlanılamadı.");
+}
+
     };
     
 

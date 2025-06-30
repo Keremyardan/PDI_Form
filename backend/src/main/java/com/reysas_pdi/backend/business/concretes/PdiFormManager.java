@@ -35,14 +35,15 @@ public class PdiFormManager implements IPdiFormService {
                 .vin(pdiFormSaveRequest.getVin())
                 .kmBilgisi(pdiFormSaveRequest.getKmBilgisi())
                 .kontrolTarihi(pdiFormSaveRequest.getKontrolTarihi())
-                .functionalChecks(pdiFormSaveRequest.getFunctionalChecks())
                 .fuelLitres1(pdiFormSaveRequest.getFuelLitres1())
                 .fuelLitres2(pdiFormSaveRequest.getFuelLitres2())
                 .fuelTypeBenzin1(pdiFormSaveRequest.getFuelTypeBenzin1())
                 .fuelTypeBenzin2(pdiFormSaveRequest.getFuelTypeBenzin2())
                 .gurasyon(pdiFormSaveRequest.getGurasyon())
                 .firstAid(pdiFormSaveRequest.getFirstaid())
-                .additionalNotes(pdiFormSaveRequest.getAdditionalNotes()).build();
+                .additionalNotes(pdiFormSaveRequest.getAdditionalNotes()).selectedParts(pdiFormSaveRequest.getSelectedParts())
+                .build();
+
 
 
 

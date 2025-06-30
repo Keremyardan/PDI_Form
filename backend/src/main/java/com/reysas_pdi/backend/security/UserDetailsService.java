@@ -32,13 +32,18 @@ public class UserDetailsService implements org.springframework.security.core.use
         }
 
         Officer officer = officerRepo.findByEmail(username).orElse(null);
+
         if (officer != null) {
+
             return User.builder()
                     .username(officer.getEmail())
                     .password(officer.getPassword())
                     .roles(officer.getUserRole().name()) // Örn: OFFICER
                     .build();
+
         }
+        System.out.println("Gelen Username: " + username);
+
 
         throw new UsernameNotFoundException("Kullanıcı bulunamadı: " + username);
     }
