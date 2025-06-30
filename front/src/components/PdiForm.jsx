@@ -46,15 +46,17 @@ if (!credentials) {
 const base64Credentials = btoa(credentials); // 'username:password' formatında
 
 try {
-   const response = await fetch("http://localhost:8080/pdi-form/submit", {
+   const response = await fetch("http://localhost:8080/api/pdi-form/submit", {
     method: 'POST',
     headers: {
         "Content-Type": "application/json",
-        "Authorization": `Basic ${base64Credentials}` // Authorization header'ı ekleyin
+        "Authorization": `Basic ${btoa('officer@officer.com:12345')}`
     },
-    credentials: "include", // Cookies (session) gönderme
+    credentials: "include",
+    mode: "cors",
     body: JSON.stringify(filteredFormData)
 });
+
 
     if (!response.ok) {
         const errorText = await response.text();
