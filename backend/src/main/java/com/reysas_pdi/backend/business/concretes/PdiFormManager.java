@@ -41,7 +41,20 @@ public class PdiFormManager implements IPdiFormService {
                 .fuelTypeBenzin2(pdiFormSaveRequest.getFuelTypeBenzin2())
                 .gurasyon(pdiFormSaveRequest.getGurasyon())
                 .firstAid(pdiFormSaveRequest.getFirstaid())
-                .additionalNotes(pdiFormSaveRequest.getAdditionalNotes()).selectedParts(pdiFormSaveRequest.getSelectedParts())
+                .additionalNotes(pdiFormSaveRequest.getAdditionalNotes())
+                .solOnKapi(pdiFormSaveRequest.getSolOnKapi())
+                .sagOnKapi(pdiFormSaveRequest.getSagOnKapi())
+                .onKaput(pdiFormSaveRequest.getOnKaput())
+                .arkaTampon(pdiFormSaveRequest.getArkaTampon())
+                .tavan(pdiFormSaveRequest.getTavan())
+                .onTampon(pdiFormSaveRequest.getOnTampon())
+                .arkaBagaj(pdiFormSaveRequest.getArkaBagaj())
+                .sagOnCamurluk(pdiFormSaveRequest.getSagOnCamurluk())
+                .solOnCamurluk(pdiFormSaveRequest.getSolOnCamurluk())
+                .sagArkaCamurluk(pdiFormSaveRequest.getSagArkaCamurluk())
+                .solArkaCamurluk(pdiFormSaveRequest.getSolArkaCamurluk())
+                .sagArkaKapi(pdiFormSaveRequest.getSagArkaKapi())
+                .solArkaKapi(pdiFormSaveRequest.getSolArkaKapi())
                 .build();
 
 

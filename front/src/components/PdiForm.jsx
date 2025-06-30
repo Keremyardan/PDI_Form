@@ -6,15 +6,21 @@ import SvgCar from "./SvgCar"
 function PdiForm() {
      const [formData, setFormData] = useState({});
     const [hoveredPart, setHoveredPart] = useState(null);
+    const [selectedParts, setSelectedParts] = useState([]);
 
     const handlePartHover = (partId) => {
         setHoveredPart(partId);
         console.log(`Hovered on part: ${partId}`);
     };
 
-    const handlePartClick = (partId) => {
-        console.log("part clicked");
-    };
+  const handlePartClick = (partId) => {
+    setSelectedParts(prev =>
+        prev.includes(partId)
+            ? prev.filter(id => id !== partId)
+            : [...prev, partId]
+    );
+};
+
 
     const handleChange = (event) => {
         const { name, value, type, checked } = event.target;
@@ -42,8 +48,7 @@ if (!credentials) {
     return;
 }
 
-// Base64 encoding the credentials (username:password)
-const base64Credentials = btoa(credentials); // 'username:password' formatında
+const base64Credentials = btoa(credentials); 
 
 try {
    const response = await fetch("http://localhost:8080/api/pdi-form/submit", {
@@ -54,7 +59,24 @@ try {
     },
     credentials: "include",
     mode: "cors",
-    body: JSON.stringify(filteredFormData)
+   body: JSON.stringify({
+  ...filteredFormData,
+  solOnKapi: selectedParts.includes("solOnKapi"),
+  sagOnKapi: selectedParts.includes("sagOnKapi"),
+  onKaput: selectedParts.includes("onKaput"),
+  arkaTampon: selectedParts.includes("arkaTampon"),
+  tavan: selectedParts.includes("tavan"),
+  onTampon: selectedParts.includes("onTampon"),
+  arkaBagaj: selectedParts.includes("arkaBagaj"),
+  sagOnCamurluk: selectedParts.includes("sagOnCamurluk"),
+  solOnCamurluk: selectedParts.includes("solOnCamurluk"),
+  sagArkaCamurluk: selectedParts.includes("sagArkaCamurluk"),
+  solArkaCamurluk: selectedParts.includes("solArkaCamurluk"),
+  sagArkaKapi: selectedParts.includes("sagArkaKapi"),
+  solArkaKapi: selectedParts.includes("solArkaKapi")
+})
+
+
 });
 
 
@@ -111,7 +133,13 @@ try {
                 <div className="fourth-row">
                     <div className="fifth-cell">HASAR TANIMI</div>
                     <div className="sixth-cell">
-                        <SvgCar className="image" onPartHover={handlePartHover} onPartClick={handlePartClick}/>
+                        <SvgCar
+    onPartHover={handlePartHover}
+    onPartClick={handlePartClick}
+    selectedParts={selectedParts}
+    hoveredPart={hoveredPart}
+/>
+
                     </div>
 
                     <div className="lines">

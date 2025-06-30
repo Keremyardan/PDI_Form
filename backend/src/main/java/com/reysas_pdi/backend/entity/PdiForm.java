@@ -38,9 +38,18 @@ public class PdiForm {
     @JoinColumn(name = "officer_id")
     private Officer officer;
 
-    @ElementCollection
-    @CollectionTable(name = "selected_parts", joinColumns = @JoinColumn(name="pdi_form_id"))
-    @Column(name ="part_name")
-    private List<String> selectedParts;
+    private Boolean solOnKapi;
+    private Boolean sagOnKapi;
+    private Boolean onKaput;
+    private Boolean arkaTampon;
+    private Boolean tavan;
+    private Boolean onTampon;
+    private Boolean arkaBagaj;
+    private Boolean sagOnCamurluk;
+    private Boolean solOnCamurluk;
+    private Boolean sagArkaCamurluk;
+    private Boolean solArkaCamurluk;
+    private Boolean sagArkaKapi;
+    private Boolean solArkaKapi;
 
 }

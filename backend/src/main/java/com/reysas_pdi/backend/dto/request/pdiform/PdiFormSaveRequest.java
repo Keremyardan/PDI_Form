@@ -47,5 +47,17 @@ public class PdiFormSaveRequest {
 
     private String additionalNotes;
 
-    private List<String> selectedParts;
+    private Boolean solOnKapi;
+    private Boolean sagOnKapi;
+    private Boolean onKaput;
+    private Boolean arkaTampon;
+    private Boolean tavan;
+    private Boolean onTampon;
+    private Boolean arkaBagaj;
+    private Boolean sagOnCamurluk;
+    private Boolean solOnCamurluk;
+    private Boolean sagArkaCamurluk;
+    private Boolean solArkaCamurluk;
+    private Boolean sagArkaKapi;
+    private Boolean solArkaKapi;
 }

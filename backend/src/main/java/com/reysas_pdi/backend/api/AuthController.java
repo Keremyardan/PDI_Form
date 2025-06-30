@@ -59,7 +59,7 @@ public class AuthController {
                     officer.getUserRole().name()
             )));
         }
-        
+
         return ResponseEntity.status(401).body(new ResultData<>(false, "Geçersiz mail ya da şifre", "401", null));
     }
 
