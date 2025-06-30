@@ -58,6 +58,7 @@ try {
 });
 
 
+
     if (!response.ok) {
         const errorText = await response.text();
         console.error("Sunucu Hatası:", errorText);
@@ -65,6 +66,7 @@ try {
     }
 
     alert("Form başarıyla gönderildi");
+    setFormData({})
 } catch (error) {
     console.error("Hata", error);
     alert(`Bir hata oluştu: ${error.message}`);
