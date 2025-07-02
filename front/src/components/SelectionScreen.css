@@ -1,0 +1,14 @@
+.selectionContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f7f7f7;
+    gap:20px;
+}
+.buttonContainer{
+    padding: 20px;
+    border: 2px solid;
+}

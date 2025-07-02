@@ -43,7 +43,7 @@ try {
 
     if (response.ok && data && data.success) {
         onLogin(data.data.role);
-        navigate("/pdi-form");
+        navigate("/selection");
     } else {
         setError((data && data.message) || `Giriş başarısız! Status: ${response.status}`);
     }

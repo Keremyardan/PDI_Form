@@ -3,9 +3,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* İçeriği yukarı yasla */
+  justify-content: flex-start;
   min-height: 100vh;
-  background-color: #f4f4f4; /* Arka plan rengi (isteğe bağlı) */
+  background-color: #f4f4f4; 
 }
 
 .app h1 {
