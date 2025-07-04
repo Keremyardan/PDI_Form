@@ -42,6 +42,7 @@ try {
     }
 
     if (response.ok && data && data.success) {
+         localStorage.setItem("role", data.data.role);
         onLogin(data.data.role);
         navigate("/selection");
     } else {

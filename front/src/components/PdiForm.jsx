@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../components/PdiForm.css';
 import logo from "../assets/cherylogo.svg"
 import SvgCar from "./SvgCar"
 
-function PdiForm() {
-     const [formData, setFormData] = useState({});
+function PdiForm({ isReadOnly = false, form = {} }) {
+    const [formData, setFormData] = useState(form);
     const [hoveredPart, setHoveredPart] = useState(null);
     const [selectedParts, setSelectedParts] = useState([]);
+
+    useEffect(() => {
+  if (!form || Object.keys(form).length === 0) return; // form yoksa hiçbir şey yapma
+
+  setFormData(form);
+
+  const parts = [
+    "solOnKapi", "sagOnKapi", "onKaput", "arkaTampon", "tavan", "onTampon",
+    "arkaBagaj", "sagOnCamurluk", "solOnCamurluk", "sagArkaCamurluk",
+    "solArkaCamurluk", "sagArkaKapi", "solArkaKapi"
+  ];
+
+  const selectedFromForm = parts.filter(part => form[part]);
+  setSelectedParts(selectedFromForm);
+
+}, [form]);
+
+
 
     const handlePartHover = (partId) => {
         setHoveredPart(partId);
@@ -120,7 +138,14 @@ try {
                     </div>
                 </div>
                 <div className="second-row">
-                    <div className="second-cell"><span className="cell-text" >PDI Yeri: </span><textarea  className='kmbox' /></div>
+                    <div className="second-cell"><span className="cell-text" >PDI Yeri: </span><textarea
+  className='kmbox'
+  name="pdiYeri"
+  value={formData.pdiYeri || ''}
+  onChange={handleChange}
+  disabled={isReadOnly}
+/>
+</div>
                     <div className="second-cell"><span className="cell-text">Model: </span><textarea className='kmbox' /></div>
                     <div className="second-cell"><span className="cell-text">Vin:</span><textarea className='kmbox' /></div>
                     <div className="second-cell"><span className="cell-text">KM Bilgisi: </span><textarea className='kmbox' /></div>
@@ -133,12 +158,13 @@ try {
                 <div className="fourth-row">
                     <div className="fifth-cell">HASAR TANIMI</div>
                     <div className="sixth-cell">
-                        <SvgCar
-    onPartHover={handlePartHover}
-    onPartClick={handlePartClick}
-    selectedParts={selectedParts}
-    hoveredPart={hoveredPart}
+                <SvgCar
+  onPartHover={isReadOnly ? undefined : handlePartHover}
+  onPartClick={isReadOnly ? undefined : handlePartClick}
+  selectedParts={selectedParts}
+  hoveredPart={hoveredPart}
 />
+
 
                     </div>
 
@@ -190,7 +216,7 @@ try {
                                             type="checkbox"
                                             name={`functionalCheck${index}`}
                                             checked={formData[`functionalCheck${index}`] || false}
-                                            onChange={handleChange}
+                                            onChange={isReadOnly ? () => {} : handleChange}
                                         />
                                         {labelText}
                                     </label>
@@ -283,13 +309,15 @@ try {
                                     </div>
                                     <div className="fuel-litre">
                                         <span className='fuel-type-headers'>LİTRE:</span>
-                                        <input
-                                            type="text"
-                                            name="fuelLitres1"
-                                            value={formData.fuelLitres1 || ''}
-                                            onChange={handleChange}
-                                            placeholder="Litre Miktarı"
-                                        />
+                                      <input
+  type="text"
+  name="fuelLitres1"
+  value={formData.fuelLitres1 || ''}
+  onChange={handleChange}
+  placeholder="Litre Miktarı"
+  disabled={isReadOnly}
+/>
+
                                         <input
                                             type="text"
                                             name="fuelLitres2"
@@ -347,9 +375,12 @@ try {
                         </div>
 
                     </div>
-                    <div className='submit-button'>
-                        <button onClick={handleSubmit}>Gönder</button>
-                    </div>
+                   {!isReadOnly && (
+  <div className='submit-button'>
+    <button onClick={handleSubmit}>Gönder</button>
+  </div>
+)}
+
                 </div>
 
             </div>

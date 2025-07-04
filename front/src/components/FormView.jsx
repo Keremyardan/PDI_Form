@@ -1,46 +1,55 @@
 import React, { useEffect, useState } from 'react'
 import "../components/FormView.css"
+import { useNavigate } from 'react-router-dom';
 
 function FormView() {
 
   const [forms, setForms] = useState([]);
   const [error, setError] = useState('')
+  const navigate = useNavigate();
 
-  useEffect(() => {
-     const fetchForms = async () => {
-      try {
-        const auth = localStorage.getItem("auth");
+useEffect(() => {
+  const fetchForms = async () => {
+    try {
+      const encodedCredentials = localStorage.getItem("auth");
 
-        if (!auth) {
-          setError("Giriş bilgisi bulunamadı. Lütfen tekrar giriş yapın.");
-          return;
-        }
+      if (!encodedCredentials) {
+        setError("Giriş bilgisi bulunamadı. Lütfen tekrar giriş yapın.");
+        return;
+      }
 
-        const response = await fetch('http://localhost:8080/api/pdi-form/list', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Basic ${auth}`
-          }
-        });
+      const response = await fetch('http://localhost:8080/api/pdi-form/list', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Basic ${encodedCredentials}`
+        },
+        credentials: 'include'
+      });
 
-        if (response.ok) {
-         
-          const data = await response.json();
-           console.log("Gelen form listesi:", data);
-          setForms(data);
+      if (!response.ok) {
+        if (response.status === 401) {
+          setError("Oturumunuz sona erdi. Lütfen tekrar giriş yapın.");
         } else if (response.status === 403) {
-          setError("Yetkiniz yok. Bu formları görüntüleyemezsiniz.");
+          setError("Yetkiniz yok.");
         } else {
           setError(`Sunucu hatası: ${response.status}`);
         }
-      } catch (err) {
-        console.error('Fetch error:', err);
-        setError("Veriler getirilirken hata oluştu.");
+        return;
       }
-    };
 
-    fetchForms();
-  }, []);
+      const data = await response.json();
+      console.log("Gelen veri:", data);
+      setForms(data);
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setError("Veriler getirilirken hata oluştu.");
+    }
+  };
+
+  fetchForms();
+}, []);
+
+
 
   return (
     <div className='form-view-container'> 
@@ -59,7 +68,7 @@ function FormView() {
               <p><strong>Kilometre:</strong> {form.kmBilgisi}</p>
               <p><strong>Tarih:</strong> {form.kontrolTarihi}</p>
               <p><strong>Oluşturan:</strong> {form.officer?.name ?? "Bilinmiyor"}</p>
-              <button onClick={() => console.log('Form detayına git:', form.id)}>Detayları Gör</button>
+             <button onClick={() => navigate(`/form-detail/${form.id}`)}>Detayları Gör</button>
             </div>
           ))
         )

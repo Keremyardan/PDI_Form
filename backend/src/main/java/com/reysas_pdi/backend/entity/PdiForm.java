@@ -1,5 +1,6 @@
 package com.reysas_pdi.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,6 +37,7 @@ public class PdiForm {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "officer_id")
+    @JsonBackReference
     private Officer officer;
 
     private Boolean solOnKapi;
