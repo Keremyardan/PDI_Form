@@ -9,20 +9,20 @@ function PdiForm({ isReadOnly = false, form = {} }) {
     const [selectedParts, setSelectedParts] = useState([]);
 
     useEffect(() => {
-  if (!form || Object.keys(form).length === 0) return; // form yoksa hiçbir şey yapma
+        if (!form || Object.keys(form).length === 0) return; // form yoksa hiçbir şey yapma
 
-  setFormData(form);
+        setFormData(form);
 
-  const parts = [
-    "solOnKapi", "sagOnKapi", "onKaput", "arkaTampon", "tavan", "onTampon",
-    "arkaBagaj", "sagOnCamurluk", "solOnCamurluk", "sagArkaCamurluk",
-    "solArkaCamurluk", "sagArkaKapi", "solArkaKapi"
-  ];
+        const parts = [
+            "solOnKapi", "sagOnKapi", "onKaput", "arkaTampon", "tavan", "onTampon",
+            "arkaBagaj", "sagOnCamurluk", "solOnCamurluk", "sagArkaCamurluk",
+            "solArkaCamurluk", "sagArkaKapi", "solArkaKapi"
+        ];
 
-  const selectedFromForm = parts.filter(part => form[part]);
-  setSelectedParts(selectedFromForm);
+        const selectedFromForm = parts.filter(part => form[part]);
+        setSelectedParts(selectedFromForm);
 
-}, [form]);
+    }, [form]);
 
 
 
@@ -31,13 +31,13 @@ function PdiForm({ isReadOnly = false, form = {} }) {
         console.log(`Hovered on part: ${partId}`);
     };
 
-  const handlePartClick = (partId) => {
-    setSelectedParts(prev =>
-        prev.includes(partId)
-            ? prev.filter(id => id !== partId)
-            : [...prev, partId]
-    );
-};
+    const handlePartClick = (partId) => {
+        setSelectedParts(prev =>
+            prev.includes(partId)
+                ? prev.filter(id => id !== partId)
+                : [...prev, partId]
+        );
+    };
 
 
     const handleChange = (event) => {
@@ -59,58 +59,58 @@ function PdiForm({ isReadOnly = false, form = {} }) {
             })
         );
 
-      const credentials = localStorage.getItem("auth");
+        const credentials = localStorage.getItem("auth");
 
-if (!credentials) {
-    alert("Lütfen önce giriş yapın.");
-    return;
-}
+        if (!credentials) {
+            alert("Lütfen önce giriş yapın.");
+            return;
+        }
 
-const base64Credentials = btoa(credentials); 
+        const base64Credentials = btoa(credentials);
 
-try {
-   const response = await fetch("http://localhost:8080/api/pdi-form/submit", {
-    method: 'POST',
-    headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Basic ${btoa('officer@officer.com:12345')}`
-    },
-    credentials: "include",
-    mode: "cors",
-   body: JSON.stringify({
-  ...filteredFormData,
-  solOnKapi: selectedParts.includes("solOnKapi"),
-  sagOnKapi: selectedParts.includes("sagOnKapi"),
-  onKaput: selectedParts.includes("onKaput"),
-  arkaTampon: selectedParts.includes("arkaTampon"),
-  tavan: selectedParts.includes("tavan"),
-  onTampon: selectedParts.includes("onTampon"),
-  arkaBagaj: selectedParts.includes("arkaBagaj"),
-  sagOnCamurluk: selectedParts.includes("sagOnCamurluk"),
-  solOnCamurluk: selectedParts.includes("solOnCamurluk"),
-  sagArkaCamurluk: selectedParts.includes("sagArkaCamurluk"),
-  solArkaCamurluk: selectedParts.includes("solArkaCamurluk"),
-  sagArkaKapi: selectedParts.includes("sagArkaKapi"),
-  solArkaKapi: selectedParts.includes("solArkaKapi")
-})
-
-
-});
+        try {
+            const response = await fetch("http://localhost:8080/api/pdi-form/submit", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Basic ${btoa('officer@officer.com:12345')}`
+                },
+                credentials: "include",
+                mode: "cors",
+                body: JSON.stringify({
+                    ...filteredFormData,
+                    solOnKapi: selectedParts.includes("solOnKapi"),
+                    sagOnKapi: selectedParts.includes("sagOnKapi"),
+                    onKaput: selectedParts.includes("onKaput"),
+                    arkaTampon: selectedParts.includes("arkaTampon"),
+                    tavan: selectedParts.includes("tavan"),
+                    onTampon: selectedParts.includes("onTampon"),
+                    arkaBagaj: selectedParts.includes("arkaBagaj"),
+                    sagOnCamurluk: selectedParts.includes("sagOnCamurluk"),
+                    solOnCamurluk: selectedParts.includes("solOnCamurluk"),
+                    sagArkaCamurluk: selectedParts.includes("sagArkaCamurluk"),
+                    solArkaCamurluk: selectedParts.includes("solArkaCamurluk"),
+                    sagArkaKapi: selectedParts.includes("sagArkaKapi"),
+                    solArkaKapi: selectedParts.includes("solArkaKapi")
+                })
 
 
+            });
 
-    if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Sunucu Hatası:", errorText);
-        throw new Error(`Form gönderimi başarısız: ${response.status} - ${errorText}`);
-    }
 
-    alert("Form başarıyla gönderildi");
-    setFormData({})
-} catch (error) {
-    console.error("Hata", error);
-    alert(`Bir hata oluştu: ${error.message}`);
-}
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Sunucu Hatası:", errorText);
+                throw new Error(`Form gönderimi başarısız: ${response.status} - ${errorText}`);
+            }
+
+            alert("Form başarıyla gönderildi");
+            setFormData({})
+        } catch (error) {
+            console.error("Hata", error);
+            alert(`Bir hata oluştu: ${error.message}`);
+        }
 
     };
 
@@ -139,13 +139,13 @@ try {
                 </div>
                 <div className="second-row">
                     <div className="second-cell"><span className="cell-text" >PDI Yeri: </span><textarea
-  className='kmbox'
-  name="pdiYeri"
-  value={formData.pdiYeri || ''}
-  onChange={handleChange}
-  disabled={isReadOnly}
-/>
-</div>
+                        className='kmbox'
+                        name="pdiYeri"
+                        value={formData.pdiYeri || ''}
+                        onChange={handleChange}
+                        disabled={isReadOnly}
+                    />
+                    </div>
                     <div className="second-cell"><span className="cell-text">Model: </span><textarea className='kmbox' /></div>
                     <div className="second-cell"><span className="cell-text">Vin:</span><textarea className='kmbox' /></div>
                     <div className="second-cell"><span className="cell-text">KM Bilgisi: </span><textarea className='kmbox' /></div>
@@ -158,12 +158,12 @@ try {
                 <div className="fourth-row">
                     <div className="fifth-cell">HASAR TANIMI</div>
                     <div className="sixth-cell">
-                <SvgCar
-  onPartHover={isReadOnly ? undefined : handlePartHover}
-  onPartClick={isReadOnly ? undefined : handlePartClick}
-  selectedParts={selectedParts}
-  hoveredPart={hoveredPart}
-/>
+                        <SvgCar
+                            onPartHover={isReadOnly ? undefined : handlePartHover}
+                            onPartClick={isReadOnly ? undefined : handlePartClick}
+                            selectedParts={selectedParts}
+                            hoveredPart={hoveredPart}
+                        />
 
 
                     </div>
@@ -216,7 +216,7 @@ try {
                                             type="checkbox"
                                             name={`functionalCheck${index}`}
                                             checked={formData[`functionalCheck${index}`] || false}
-                                            onChange={isReadOnly ? () => {} : handleChange}
+                                            onChange={isReadOnly ? () => { } : handleChange}
                                         />
                                         {labelText}
                                     </label>
@@ -309,14 +309,14 @@ try {
                                     </div>
                                     <div className="fuel-litre">
                                         <span className='fuel-type-headers'>LİTRE:</span>
-                                      <input
-  type="text"
-  name="fuelLitres1"
-  value={formData.fuelLitres1 || ''}
-  onChange={handleChange}
-  placeholder="Litre Miktarı"
-  disabled={isReadOnly}
-/>
+                                        <input
+                                            type="text"
+                                            name="fuelLitres1"
+                                            value={formData.fuelLitres1 || ''}
+                                            onChange={handleChange}
+                                            placeholder="Litre Miktarı"
+                                            disabled={isReadOnly}
+                                        />
 
                                         <input
                                             type="text"
@@ -375,11 +375,11 @@ try {
                         </div>
 
                     </div>
-                   {!isReadOnly && (
-  <div className='submit-button'>
-    <button onClick={handleSubmit}>Gönder</button>
-  </div>
-)}
+                    {!isReadOnly && (
+                        <div className='submit-button'>
+                            <button onClick={handleSubmit}>Gönder</button>
+                        </div>
+                    )}
 
                 </div>
 
