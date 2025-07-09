@@ -93,12 +93,27 @@ public class PdiFormController {
                 .kontrolTarihi(entity.getKontrolTarihi())
                 .fuelLitres1(entity.getFuelLitres1())
                 .fuelLitres2(entity.getFuelLitres2())
-                .fuelTypeBenzin1(entity.getFuelTypeBenzin1())
-                .fuelTypeBenzin1(entity.getFuelTypeBenzin2())
+                .fuelTypeBenzin1(entity.getFuelTypeBenzin1()) 
+                .fuelTypeBenzin2(entity.getFuelTypeBenzin2())
                 .gurasyon(entity.getGurasyon())
                 .firstaid(entity.getFirstAid())
                 .additionalNotes(entity.getAdditionalNotes())
+
+                .solOnKapi(entity.getSolOnKapi())
+                .sagOnKapi(entity.getSagOnKapi())
+                .onKaput(entity.getOnKaput())
+                .arkaTampon(entity.getArkaTampon())
+                .tavan(entity.getTavan())
+                .onTampon(entity.getOnTampon())
+                .arkaBagaj(entity.getArkaBagaj())
+                .sagOnCamurluk(entity.getSagOnCamurluk())
+                .solOnCamurluk(entity.getSolOnCamurluk())
+                .sagArkaCamurluk(entity.getSagArkaCamurluk())
+                .solArkaCamurluk(entity.getSolArkaCamurluk())
+                .sagArkaKapi(entity.getSagArkaKapi())
+                .solArkaKapi(entity.getSolArkaKapi())
                 .build();
+
 
         return ResponseEntity.ok(dto);
     }
