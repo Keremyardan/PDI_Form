@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const SvgCar = ({ onPartHover, onPartClick }) => {
+const SvgCar = ({ onPartHover, onPartClick, selectedParts = [] }) => {
+
     const [hoveredPart, setHoveredPart] = useState(null);
-    const [selectedParts, setSelectedParts] = useState([]);
 
     const handleMouseEnter = (partId) => {
         setHoveredPart(partId);
@@ -18,17 +18,13 @@ const SvgCar = ({ onPartHover, onPartClick }) => {
         }
     };
 
-    const handleClick = (partId) => {
-       const isSelected = selectedParts.includes(partId);
-       if(isSelected) {
-        setSelectedParts(selectedParts.filter(id => id !== partId))
-       }else{
-        setSelectedParts([...selectedParts, partId]);
-       }
-       if (onPartClick) {
-        onPartClick(partId, !isSelected);
-       }
+const handleClick = (partId) => {
+    const isSelected = selectedParts.includes(partId);
+    if (onPartClick) {
+        onPartClick(partId, !isSelected); 
     }
+};
+
 
 const getPartStyle = (partId) => {
         if (selectedParts.includes(partId) || hoveredPart === partId) {

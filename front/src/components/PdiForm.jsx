@@ -21,7 +21,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
 
         const selectedFromForm = parts.filter(part => form[part]);
         setSelectedParts(selectedFromForm);
-
+        console.log(selectedFromForm)
     }, [form]);
 
 
@@ -106,7 +106,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
             }
 
             alert("Form başarıyla gönderildi");
-            setFormData({})
+            window.location.reload();
         } catch (error) {
             console.error("Hata", error);
             alert(`Bir hata oluştu: ${error.message}`);

@@ -24,7 +24,7 @@ const res = await fetch(`http://localhost:8080/api/pdi-form/${id}`, {
 });
         if (!res.ok) throw new Error("Veri alınamadı");
         const data = await res.json();
-        setForm(data); // Eğer backend response'u {status: true, data: {...}} ise
+        setForm(data);
       } catch (e) {
         console.error("Form çekilemedi:", e);
       }
