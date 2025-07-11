@@ -16,7 +16,7 @@ function Login({ onLogin }) {
         if (username.trim() === '' || password.trim() === '') {
             setError('Kullanıcı adı ve şifre boş bırakılamaz!');
             return;
-        }
+        }       
 
         const encodedCredentials = btoa(`${username}:${password}`);
         localStorage.setItem("auth", encodedCredentials);

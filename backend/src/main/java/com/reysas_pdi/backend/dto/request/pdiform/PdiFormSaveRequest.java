@@ -60,4 +60,34 @@ public class PdiFormSaveRequest {
     private Boolean solArkaCamurluk;
     private Boolean sagArkaKapi;
     private Boolean solArkaKapi;
+
+    private Boolean functionalCheck0;
+    private Boolean functionalCheck1;
+    private Boolean functionalCheck2;
+    private Boolean functionalCheck3;
+    private Boolean functionalCheck4;
+    private Boolean functionalCheck5;
+    private Boolean functionalCheck6;
+    private Boolean functionalCheck7;
+    private Boolean functionalCheck8;
+    private Boolean functionalCheck9;
+    private Boolean functionalCheck10;
+    private Boolean functionalCheck11;
+    private Boolean functionalCheck12;
+    private Boolean functionalCheck13;
+    private Boolean functionalCheck14;
+    private Boolean functionalCheck15;
+    private Boolean functionalCheck16;
+    private Boolean functionalCheck17;
+    private Boolean functionalCheck18;
+    private Boolean functionalCheck19;
+    private Boolean functionalCheck20;
+    private Boolean functionalCheck21;
+    private Boolean functionalCheck22;
+    private Boolean functionalCheck23;
+    private Boolean functionalCheck24;
+    private Boolean functionalCheck25;
+    private Boolean functionalCheck26;
+    private Boolean functionalCheck27;
+    private Boolean functionalCheck28;
 }

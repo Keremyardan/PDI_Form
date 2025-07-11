@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             Administrator admin = adminOpt.get();
             return User.builder()
                     .username(admin.getEmail())
-                    .password(admin.getPassword()) // dikkat: şifre hash'li olmalı
+                    .password(admin.getPassword())
                     .roles("ADMIN")
                     .build();
         }
@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             Officer officer = officerOpt.get();
             return User.builder()
                     .username(officer.getEmail())
-                    .password(officer.getPassword()) // dikkat: şifre hash'li olmalı
+                    .password(officer.getPassword())
                     .roles("OFFICER")
                     .build();
         }

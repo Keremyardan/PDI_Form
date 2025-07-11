@@ -9,7 +9,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
     const [selectedParts, setSelectedParts] = useState([]);
 
     useEffect(() => {
-        if (!form || Object.keys(form).length === 0) return; // form yoksa hiçbir şey yapma
+        if (!form || Object.keys(form).length === 0) return;
 
         setFormData(form);
 
@@ -146,10 +146,47 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                         disabled={isReadOnly}
                     />
                     </div>
-                    <div className="second-cell"><span className="cell-text">Model: </span><textarea className='kmbox' /></div>
-                    <div className="second-cell"><span className="cell-text">Vin:</span><textarea className='kmbox' /></div>
-                    <div className="second-cell"><span className="cell-text">KM Bilgisi: </span><textarea className='kmbox' /></div>
-                    <div className="second-cell"><span className="cell-text">Kontrol Tarihi: </span><input type="date" /></div>
+                    <div className="second-cell">
+                        <span className="cell-text">Model: </span>
+                        <textarea
+                            className='kmbox'
+                            name="model"
+                            value={formData.model || ''}
+                            onChange={handleChange}
+                            disabled={isReadOnly}
+                        />
+                    </div>
+
+                    <div className="second-cell">
+                        <span className="cell-text">Vin: </span>
+                        <textarea
+                            className='kmbox'
+                            name="vin"
+                            value={formData.vin || ''}
+                            onChange={handleChange}
+                            disabled={isReadOnly}
+                        />
+                    </div>
+
+                    <div className="second-cell">
+                        <span className="cell-text">KM Bilgisi: </span>
+                        <textarea
+                            className='kmbox'
+                            name="kmBilgisi"
+                            value={formData.kmBilgisi || ''}
+                            onChange={handleChange}
+                            disabled={isReadOnly}
+                        />
+                    </div>
+
+                    <div className="second-cell"><span className="cell-text">Kontrol Tarihi: </span><input
+                        type="date"
+                        name="kontrolTarihi"
+                        value={formData.kontrolTarihi || ""}
+                        onChange={handleChange}
+                        disabled={isReadOnly}
+                    />
+                    </div>
                 </div>
                 <div className="third-row">
                     <div className="third-cell">Tip</div>
@@ -170,6 +207,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
 
                     <div className="lines">
                         <div >
+                           
                             <div className="seventh-cell">{"1-)"}</div>
                             <div className="seventh-cell">{"2-)"}</div>
                             <div className="seventh-cell">{"3-)"}</div>
@@ -181,15 +219,16 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                             <div className="seventh-cell">{"9-)"}</div>
                         </div>
                         <div >
-                            <div className="eighth-cell"></div>
-                            <div className="eighth-cell"></div>
-                            <div className="eighth-cell"></div>
-                            <div className="eighth-cell"></div>
-                            <div className="eighth-cell"></div>
-                            <div className="eighth-cell"></div>
-                            <div className="eighth-cell"></div>
-                            <div className="eighth-cell"></div>
-                            <div className="eighth-cell"></div>
+                            <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
+                             <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
+                              <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
+                               <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
+                                <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
+                                 <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
+                                  <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
+                                   <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
+                                   <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
+                                   
                         </div>
                     </div>
                 </div>
