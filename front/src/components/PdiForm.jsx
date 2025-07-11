@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../components/PdiForm.css';
 import logo from "../assets/cherylogo.svg"
+import {LogOut} from "../components/Logout"
 import SvgCar from "./SvgCar"
 
 function PdiForm({ isReadOnly = false, form = {} }) {
@@ -133,7 +134,11 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                     </div>
                     <div className="first-row3">
                         <div className="pdiimage-cell">
-                            <img className="image" src={logo} alt="logo" />
+                             
+                                <button onClick={LogOut} className='logout'>Çıkış Yap</button>
+                                 <img className="image" src={logo} alt="logo" />
+                      
+                           
                         </div>
                     </div>
                 </div>
@@ -181,6 +186,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
 
                     <div className="second-cell"><span className="cell-text">Kontrol Tarihi: </span><input
                         type="date"
+                        className='dateinput'
                         name="kontrolTarihi"
                         value={formData.kontrolTarihi || ""}
                         onChange={handleChange}
@@ -408,7 +414,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
 
                             </label>
                             <label>
-                                <text>Nihai yorumlama hakkı Chery International'a aittir.</text>
+                                <text className='explanation'>Nihai yorumlama hakkı Chery International'a aittir.</text>
                             </label>
 
                         </div>
