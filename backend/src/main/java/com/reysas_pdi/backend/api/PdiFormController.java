@@ -140,6 +140,18 @@ public class PdiFormController {
                 .functionalCheck26(entity.getFunctionalCheck26())
                 .functionalCheck27(entity.getFunctionalCheck27())
                 .functionalCheck28(entity.getFunctionalCheck28())
+                .createdAt(entity.getCreatedAt())
+                .createdByName(entity.getOfficer() != null ? entity.getOfficer().getName() : null)
+                .damageDescription0(entity.getDamageDescription0())
+                .damageDescription1(entity.getDamageDescription1())
+                .damageDescription2(entity.getDamageDescription2())
+                .damageDescription3(entity.getDamageDescription3())
+                .damageDescription4(entity.getDamageDescription4())
+                .damageDescription5(entity.getDamageDescription5())
+                .damageDescription6(entity.getDamageDescription6())
+                .damageDescription7(entity.getDamageDescription7())
+                .damageDescription8(entity.getDamageDescription8())
+
                 .build();
 
 

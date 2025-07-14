@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.Map;
 
 @Data
@@ -12,6 +13,8 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 public class PdiFormResponse {
+    private Date createdAt;
+    private String createdByName;
     private String pdiYeri;
     private String model;
     private String vin;
@@ -69,5 +72,15 @@ public class PdiFormResponse {
     private Boolean functionalCheck26;
     private Boolean functionalCheck27;
     private Boolean functionalCheck28;
+
+    private String damageDescription0;
+    private String damageDescription1;
+    private String damageDescription2;
+    private String damageDescription3;
+    private String damageDescription4;
+    private String damageDescription5;
+    private String damageDescription6;
+    private String damageDescription7;
+    private String damageDescription8;
 
 }

@@ -88,6 +88,15 @@
                     .functionalCheck26(pdiFormSaveRequest.getFunctionalCheck26())
                     .functionalCheck27(pdiFormSaveRequest.getFunctionalCheck27())
                     .functionalCheck28(pdiFormSaveRequest.getFunctionalCheck28())
+                    .damageDescription0(pdiFormSaveRequest.getDamageDescription0())
+                    .damageDescription1(pdiFormSaveRequest.getDamageDescription1())
+                    .damageDescription2(pdiFormSaveRequest.getDamageDescription2())
+                    .damageDescription3(pdiFormSaveRequest.getDamageDescription3())
+                    .damageDescription4(pdiFormSaveRequest.getDamageDescription4())
+                    .damageDescription5(pdiFormSaveRequest.getDamageDescription5())
+                    .damageDescription6(pdiFormSaveRequest.getDamageDescription6())
+                    .damageDescription7(pdiFormSaveRequest.getDamageDescription7())
+                    .damageDescription8(pdiFormSaveRequest.getDamageDescription8())
                     .build();
 
             PdiForm saved = pdiFormRepo.save(form);

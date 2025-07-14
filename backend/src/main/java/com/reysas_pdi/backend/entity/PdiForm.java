@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @Data
 @Getter
@@ -16,6 +18,15 @@ public class PdiForm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(updatable = false)
+    private Date createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+    }
 
     private String pdiYeri;
     private String model;
@@ -80,4 +91,15 @@ public class PdiForm {
     private Boolean functionalCheck26;
     private Boolean functionalCheck27;
     private Boolean functionalCheck28;
+
+    private String damageDescription0;
+    private String damageDescription1;
+    private String damageDescription2;
+    private String damageDescription3;
+    private String damageDescription4;
+    private String damageDescription5;
+    private String damageDescription6;
+    private String damageDescription7;
+    private String damageDescription8;
+
 }

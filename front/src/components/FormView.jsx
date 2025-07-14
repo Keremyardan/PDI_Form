@@ -50,6 +50,11 @@ useEffect(() => {
 }, []);
 
 
+const formatDateTime = (isoString) => {
+  const date = new Date(isoString);
+  return date.toLocaleDateString('tr-TR') + ' ' + date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+};
+
 
   return (
     <div className='form-view-container'> 
@@ -64,10 +69,14 @@ useEffect(() => {
           forms.map((form) => (
                 <div key={form.id} className="form-card">
               <h3>{form.model} - {form.vin}</h3>
-              <p><strong>PDI Yeri:</strong> {form.pdiYeri}</p>
-              <p><strong>Kilometre:</strong> {form.kmBilgisi}</p>
-              <p><strong>Tarih:</strong> {form.kontrolTarihi}</p>
-              <p><strong>Oluşturan:</strong> {form.officer?.name ?? "Bilinmiyor"}</p>
+            <p>
+<p className="form-text">
+  <strong>Kayıt:</strong>{" "}
+  {form.createdAt ? formatDateTime(form.createdAt) : "Tarih yok"} –{" "}
+</p>
+
+</p>
+
              <button onClick={() => navigate(`/form-detail/${form.id}`)}>Detayları Gör</button>
             </div>
           ))

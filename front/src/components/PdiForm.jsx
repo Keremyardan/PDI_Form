@@ -52,13 +52,16 @@ function PdiForm({ isReadOnly = false, form = {} }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const filteredFormData = Object.fromEntries(
-            Object.entries(formData).filter(([_, value]) => {
-                if (typeof value === "boolean") return value;
-                if (typeof value === "string") return value.trim() !== "";
-                return false;
-            })
-        );
+const filteredFormData = Object.fromEntries(
+  Object.entries(formData).filter(([key, value]) => {
+    if (key.startsWith("damageDescription")) return true; // 🔒 asla atma
+    if (typeof value === "boolean") return true;
+    if (typeof value === "string") return value.trim() !== "";
+    return false;
+  })
+);
+
+
 
         const credentials = localStorage.getItem("auth");
 
@@ -79,7 +82,8 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                 credentials: "include",
                 mode: "cors",
                 body: JSON.stringify({
-                    ...filteredFormData,
+               ...formData,
+
                     solOnKapi: selectedParts.includes("solOnKapi"),
                     sagOnKapi: selectedParts.includes("sagOnKapi"),
                     onKaput: selectedParts.includes("onKaput"),
@@ -225,16 +229,18 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                             <div className="seventh-cell">{"9-)"}</div>
                         </div>
                         <div >
-                            <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
-                             <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
-                              <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
-                               <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
-                                <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
-                                 <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
-                                  <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
-                                   <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
-                                   <div className="eighth-cell"><textarea className='eighth-cell-textarea'/></div>
-                                   
+{[...Array(9)].map((_, index) => (
+  <div className="eighth-cell" key={index}>
+    <textarea
+      className="eighth-cell-textarea"
+      name={`damageDescription${index}`}
+      value={formData[`damageDescription${index}`] || ''}
+      onChange={handleChange}
+      disabled={isReadOnly}
+    />
+  </div>
+))}
+                           
                         </div>
                     </div>
                 </div>

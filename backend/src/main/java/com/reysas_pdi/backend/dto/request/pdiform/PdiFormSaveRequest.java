@@ -90,4 +90,15 @@ public class PdiFormSaveRequest {
     private Boolean functionalCheck26;
     private Boolean functionalCheck27;
     private Boolean functionalCheck28;
+
+    private String damageDescription0;
+    private String damageDescription1;
+    private String damageDescription2;
+    private String damageDescription3;
+    private String damageDescription4;
+    private String damageDescription5;
+    private String damageDescription6;
+    private String damageDescription7;
+    private String damageDescription8;
+
 }
