@@ -18,5 +18,8 @@ public interface PdiFormRepo extends JpaRepository<PdiForm, Long> {
     List<PdiForm> findByOfficer(Officer officer);
 
 
+    List<PdiForm> findByCreatedByEmail(String email);
+
+    List<PdiForm> findByCreatedByEmailAndCreatedByRole(String email, String role);
 
 }

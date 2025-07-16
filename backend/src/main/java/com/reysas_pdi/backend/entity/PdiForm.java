@@ -48,6 +48,9 @@ public class PdiForm {
     @JsonBackReference
     private Officer officer;
 
+    private String createdByEmail;
+    private String createdByRole;
+
     private Boolean solOnKapi;
     private Boolean sagOnKapi;
     private Boolean onKaput;

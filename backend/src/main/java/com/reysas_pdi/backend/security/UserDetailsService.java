@@ -27,7 +27,7 @@ public class UserDetailsService implements org.springframework.security.core.use
             return User.builder()
                     .username(admin.getEmail())
                     .password(admin.getPassword())
-                    .roles(admin.getUserRole().name()) // Örn: ADMIN
+                    .roles(admin.getUserRole().name())
                     .build();
         }
 
@@ -38,7 +38,7 @@ public class UserDetailsService implements org.springframework.security.core.use
             return User.builder()
                     .username(officer.getEmail())
                     .password(officer.getPassword())
-                    .roles(officer.getUserRole().name()) // Örn: OFFICER
+                    .roles(officer.getUserRole().name())
                     .build();
 
         }

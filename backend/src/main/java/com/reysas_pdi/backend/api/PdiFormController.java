@@ -41,6 +41,28 @@ public class PdiFormController {
         return ResponseEntity.status(201).body(result);
     }
 
+    @GetMapping("/all")
+    public List<PdiForm> getForms(Principal principal) {
+        String email = principal.getName();
+
+        Optional<Officer> officerOpt = officerRepo.findByEmail(email);
+        if (officerOpt.isPresent()) {
+            return pdiFormRepo.findByCreatedByEmailAndCreatedByRole(email, "OFFICER");
+        }
+
+        Optional<Administrator> adminOpt = administratorRepo.findByEmail(email);
+        if (adminOpt.isPresent()) {
+            return pdiFormRepo.findAll(); // admin tüm formları görür
+        }
+
+        throw new RuntimeException("Kullanıcı bulunamadı");
+    }
+
+
+
+
+
+
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','OFFICER')")
     public ResponseEntity<List<PdiForm>> findAll() {
