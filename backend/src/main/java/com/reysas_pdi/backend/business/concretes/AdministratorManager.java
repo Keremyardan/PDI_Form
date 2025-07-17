@@ -61,9 +61,16 @@ return ResultHelper.success(updatedAdministrator);
     }
 
     @Override
-    public void delete(Long id) {
+    public ResultData<String> delete(Long id) {
        Administrator administrator = this.administratorRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
         this.administratorRepo.delete(administrator);
+
+        return ResultHelper.success("Admin başarıyla silindi.");
+    }
+
+    @Override
+    public List<Administrator> getAll() {
+        return administratorRepo.findAll();
     }
 
     @Override

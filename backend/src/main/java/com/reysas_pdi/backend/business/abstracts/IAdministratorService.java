@@ -15,7 +15,9 @@ public interface IAdministratorService {
 
     Administrator getById(Long id);
 
-    void delete(Long id);
+    ResultData<String> delete(Long id);
+
+    List<Administrator> getAll();
 
     List<Administrator> findByNameContainingIgnoreCase(String name);
 

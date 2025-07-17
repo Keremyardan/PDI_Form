@@ -5,6 +5,7 @@ import Login from './components/Login';
 import SelectionScreen from './components/SelectionScreen';
 import FormView from './components/FormView';
 import FormDetail from './components/FormDetails';
+import UserManagement from './components/UserManagement';
 
 function App() {
   const [role, setRole] = useState(null);
@@ -31,6 +32,7 @@ useEffect(() => {
         <Route path="/pdi-form" element={role ? <PdiForm /> : <Navigate to="/login" />} />
         <Route path="*" element={<Navigate to="/login" />} />
         <Route path='/form-detail/:id' element={<FormDetail/>}/>
+<Route path="/user-management" element={<UserManagement />} />
         <Route path="/formview" element={<FormView />} />
       </Routes>
     </Router>

@@ -14,7 +14,7 @@ public abstract class SuperUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     protected String name;
 
     @Column(nullable = false, unique = true)

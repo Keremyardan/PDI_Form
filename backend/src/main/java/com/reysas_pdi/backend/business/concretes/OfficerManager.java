@@ -1,6 +1,8 @@
 package com.reysas_pdi.backend.business.concretes;
 
 import com.reysas_pdi.backend.business.abstracts.IOfficerService;
+import com.reysas_pdi.backend.core.config.result.ResultData;
+import com.reysas_pdi.backend.core.config.result.ResultHelper;
 import com.reysas_pdi.backend.core.config.utilities.Msg;
 import com.reysas_pdi.backend.core.exceptions.NotFoundException;
 import com.reysas_pdi.backend.dao.OfficerRepo;
@@ -26,11 +28,22 @@ public class OfficerManager implements IOfficerService {
     }
 
 
+
     @Override
     public Officer saveOfficer(Officer officer) {
         officer.setUserRole(UserRole.OFFICER);
         officer.setPassword(passwordEncoder.encode(officer.getPassword()));
-        return this.officerRepo.save(officer);
+        return officerRepo.save(officer);
+    }
+
+    @Override
+    public ResultData<String> delete(Long id) {
+        Officer officer = officerRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
+
+        officerRepo.delete(officer);
+
+        return ResultHelper.success("Officer başarıyla silindi.");
     }
 
     @Override
@@ -38,11 +51,7 @@ public class OfficerManager implements IOfficerService {
         return this.officerRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
     }
 
-    @Override
-    public void delete(Long id) {
-        Officer officer = this.officerRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
-        this.officerRepo.delete(officer);
-    }
+
 
     @Override
     public Officer update(Long id, Officer officer) {
@@ -62,4 +71,10 @@ public class OfficerManager implements IOfficerService {
     public List<Officer> getOfficersByName(String name) {
         return officerRepo.findByNameContainingIgnoreCase(name);
     }
+
+    @Override
+    public List<Officer> getAll() {
+        return officerRepo.findAll();
+    }
+
 }

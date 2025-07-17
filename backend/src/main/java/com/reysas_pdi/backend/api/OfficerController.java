@@ -67,6 +67,15 @@ public class OfficerController {
         return ResultHelper.success(response);
     }
 
+    @GetMapping("/all-officers")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<List<OfficerResponse>> getAllOfficers() {
+        List<Officer> officers = this.officerService.getAll();
+        List<OfficerResponse> responseList = officers.stream()
+                .map(officer -> this.modelMapperService.forResponse().map(officer, OfficerResponse.class))
+                .toList();
+        return ResultHelper.success(responseList);
+    }
 
 
 }

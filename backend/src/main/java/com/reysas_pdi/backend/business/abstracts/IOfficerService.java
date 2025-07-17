@@ -9,12 +9,13 @@ import java.util.List;
 public interface IOfficerService {
     Officer saveOfficer(Officer officer);
     Officer get(Long id);
-    void delete(Long id);
+    ResultData<String> delete(Long id);
     Officer update(Long id, Officer officer);
 
     Page<Officer> cursor (int page, int size);
 
     List<Officer> getOfficersByName(String name);
 
+    List<Officer> getAll();
 
 }
