@@ -67,7 +67,7 @@ try {
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        placeholder="Kullanıcı Adınızı Girin"
+                        placeholder="E-Mail"
                     />
                 </div>
                 <div className="input-group">
@@ -76,11 +76,11 @@ try {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Şifrenizi Girin"
+                        placeholder="Şifre"
                     />
                 </div>
                 {error && <div className="error-message">{error}</div>}
-                <button type="submit">Giriş Yap</button>
+                <button type="submit" className='button'>Giriş Yap</button>
             </form>
         </div>
     );

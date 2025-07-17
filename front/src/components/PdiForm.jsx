@@ -176,25 +176,25 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                         </select>
                     </div>
 
-                   <div className="second-cell">
-  <span className="cell-text">Model: </span>
-  <select
-    className="kmbox1"
-    name="model"
-    value={formData.model || ''}
-    onChange={handleChange}
-    disabled={isReadOnly}
-  >
-    <option value="">Seçiniz</option>
-    <option value="Omoda 5">Omoda 5</option>
-    <option value="Omoda 5 Pro">Omoda 5 Pro</option>
-    <option value="Tiggo 3">Tiggo 3</option>
-    <option value="Tiggo 7 Pro">Tiggo 7 Pro</option>
-    <option value="Tiggo 7 Pro Max">Tiggo 7 Pro Max</option>
-    <option value="Tiggo 8">Tiggo 8</option>
-    <option value="Tiggo 8 Pro Max">Tiggo 8 Pro Max</option>
-  </select>
-</div>
+                    <div className="second-cell">
+                        <span className="cell-text">Model: </span>
+                        <select
+                            className="kmbox1"
+                            name="model"
+                            value={formData.model || ''}
+                            onChange={handleChange}
+                            disabled={isReadOnly}
+                        >
+                            <option value="">Seçiniz</option>
+                            <option value="Omoda 5">Omoda 5</option>
+                            <option value="Omoda 5 Pro">Omoda 5 Pro</option>
+                            <option value="Tiggo 3">Tiggo 3</option>
+                            <option value="Tiggo 7 Pro">Tiggo 7 Pro</option>
+                            <option value="Tiggo 7 Pro Max">Tiggo 7 Pro Max</option>
+                            <option value="Tiggo 8">Tiggo 8</option>
+                            <option value="Tiggo 8 Pro Max">Tiggo 8 Pro Max</option>
+                        </select>
+                    </div>
 
 
                     <div className="second-cell">
@@ -392,6 +392,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                                     <div className="fuel-litre">
                                         <span className='fuel-type-headers'>LİTRE:</span>
                                         <input
+                                        className='fuel-box'
                                             type="text"
                                             name="fuelLitres1"
                                             value={formData.fuelLitres1 || ''}
@@ -401,6 +402,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                                         />
 
                                         <input
+                                        className='fuel-box'
                                             type="text"
                                             name="fuelLitres2"
                                             value={formData.fuelLitres2 || ''}
@@ -457,15 +459,29 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                         </div>
 
                     </div>
-                    {!isReadOnly && (
-                        <div className='submit-button'>
-                            <button onClick={handleSubmit}>
-                                {formData?.id ? "Güncelle" : "Gönder"}
-                            </button>
+                    <div className='buttons'>
+                        <button
+                            type="submit"
+                            className="submit-button"
+                            onClick={handleSubmit}
+                        >
+                            {formData.id ? "Güncelle" : "Gönder"}
+                        </button>
 
-
-                        </div>
-                    )}
+                        <button
+                            type="button"
+                            className="clear-button"
+                            onClick={() => {
+                                if (window.confirm("Formu sıfırlamak istediğinizden emin misiniz?")) {
+                                    setFormData({});
+                                    setSelectedParts([]);
+                                    setFunctionalChecks({});
+                                }
+                            }}
+                        >
+                            Formu Temizle
+                        </button>
+                    </div>
 
                 </div>
 

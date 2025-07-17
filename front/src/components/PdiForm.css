@@ -5,15 +5,19 @@
     margin: 0 auto;
     margin-left: 10px;
     margin-top: 10px;
-    margin-bottom: 10px; 
-        background-color: #fff;
+    margin-bottom: 10px;
+    background-color: #fff;
+    width: 100vw;
+    height: 100wh;
+    padding-top: 20px;
+    padding-bottom: 50px;
 }
 
 
 
 .pdi-form1 {
     max-width: 220mm;
-    height: 760px;
+    height: 768px;
     margin: 10px auto;
     border: 1px solid #000000;
     padding-right: 1000px;
@@ -56,7 +60,7 @@
     font-weight: bolder;
     flex-wrap: nowrap;
     width: 200px;
-    color:#000000;
+    color: #000000;
 }
 
 
@@ -72,7 +76,7 @@
     font-size: 0.8em;
     font-weight: bolder;
     font-size: 18px;
-    color:#000000;
+    color: #000000;
 }
 
 .first-row3 {
@@ -80,7 +84,7 @@
     justify-content: center;
     align-items: center;
     width: 300px;
-    
+
 
 }
 
@@ -88,10 +92,11 @@
     display: flex;
     width: 120px;
     flex-wrap: nowrap;
-    position: absolute;
+    position: relative;
     top: 20px;
     right: 420px;
-    color:#000000;
+    color: #000000;
+
 }
 
 
@@ -122,21 +127,21 @@
     height: 33px;
     display: flex;
     align-items: center;
-   width: 202px;
-   
+    width: 202px;
+
 }
 
 
 
-.kmbox{
-    width: 100px;
+.kmbox {
+    width: 110px;
     height: 10px;
     margin-right: 10px;
     resize: none;
     background-color: #eee;
 }
 
-.kmbox1{
+.kmbox1 {
     width: 100px;
     height: 20px;
     margin-right: 10px;
@@ -148,17 +153,17 @@
     margin-left: 5px;
     width: 100px;
     margin-right: -25px;
-    color:#000000;
+    color: #000000;
 }
 
 .third-row {
     display: flex;
     grid-template-columns: repeat(5, 1fr);
     width: 1000px;
-   
+
 }
 
-.dateinput{
+.dateinput {
     background-color: #eee;
     color: #000000;
 }
@@ -172,7 +177,7 @@
     display: flex;
     justify-content: center;
     font-weight: bolder;
-    color:#000000;
+    color: #000000;
 }
 
 .fourth-cell {
@@ -185,7 +190,7 @@
     justify-content: center;
     font-weight: bolder;
     white-space: nowrap;
-    color:#000000;
+    color: #000000;
 }
 
 .fourth-row {
@@ -221,7 +226,7 @@
 .lines {
     display: flex;
     flex-direction: row;
-    height: 53.8px
+
 }
 
 .seventh-cell {
@@ -231,7 +236,7 @@
     width: 50px;
     align-items: center;
     justify-content: center;
-    color:#000000;
+    color: #000000;
 }
 
 .eighth-cell {
@@ -259,6 +264,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    
 }
 
 .form2-first-row {
@@ -281,8 +287,8 @@
 .form2-second-row-container {
     display: flex;
     flex-direction: row;
-    width: 1000px;
-    color:#000000
+    width: 1005px;
+    color: #000000
 }
 
 .form2-second-row {
@@ -372,7 +378,7 @@
     align-items: center;
     margin-bottom: 10px;
     margin-top: 60px;
-    gap:5px
+    gap: 5px
 }
 
 .fuel-section {
@@ -397,7 +403,7 @@
 }
 
 .fuel-litre input:last-child {
-   margin-top: 2px;
+    margin-top: 2px;
 }
 
 .fuel-section {
@@ -419,27 +425,32 @@
 
 
 .additionalNotes {
-width: 300px;
-height: 300px;
-resize: none;
-margin-left:15px;
-margin-top: 5px;
-background-color: #eee;
+    width: 300px;
+    height: 300px;
+    resize: none;
+    margin-left: 15px;
+    margin-top: 5px;
+    background-color: #eee;
 }
 
 
-.fuel-type-headers{
+.fuel-type-headers {
     margin-top: 10px;
-    color:#000000
+    color: #000000;
 }
 
-.form2-last-row{
+.form2-last-row {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 1000px;
     height: 50px;
+}
+
+.fuel-box{
+    background-color: #eee;
+    color: #000;
 }
 
 .form2-last-row label {
@@ -462,16 +473,26 @@ background-color: #eee;
     cursor: pointer;
     width: 960px;
 }
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    width: 1000px;
+    gap:20px;
+    justify-content: center;
+    align-items: center;
+      height: 30px;
+}
+
 input,
 textarea,
 select {
-  color: #000;
+    color: #000;
 
-  border: 1px solid #ccc;
+    border: 1px solid #ccc;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #777;
+    color: #777;
 }
-
