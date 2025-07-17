@@ -16,7 +16,7 @@
 
 
 .pdi-form1 {
-    max-width: 220mm;
+    width: 770px;
     height: 768px;
     margin: 10px auto;
     border: 1px solid #000000;
@@ -139,6 +139,8 @@
     margin-right: 10px;
     resize: none;
     background-color: #eee;
+      overflow: hidden;   
+  resize: none; 
 }
 
 .kmbox1 {
@@ -166,6 +168,7 @@
 .dateinput {
     background-color: #eee;
     color: #000000;
+    margin-right: 2px;
 }
 
 .third-cell {
@@ -256,8 +259,8 @@
 }
 
 .pdi-form2 {
-    max-width: 210mm;
-    height: 760px;
+      width: 760px;
+    height: 768px;
     margin: 10px auto;
     border: 1px solid #000000;
     padding-right: 1000px;
@@ -267,11 +270,16 @@
     
 }
 
+.form2-container{
+    width: 750px;
+}
+
 .form2-first-row {
     display: flex;
     flex-direction: row;
     width: 1000px;
     justify-content: space-evenly;
+    
 }
 
 .form2-first-cell {
@@ -287,7 +295,7 @@
 .form2-second-row-container {
     display: flex;
     flex-direction: row;
-    width: 1005px;
+    width: 1000px;
     color: #000000
 }
 
@@ -360,7 +368,7 @@
 .form2-fourth-row {
     display: flex;
     flex-direction: column;
-    width: 333px;
+    width: 330px;
     border: 1px solid #000000;
     height: 340px;
 }
@@ -506,3 +514,44 @@ input::placeholder,
 textarea::placeholder {
     color: #777;
 }
+@media print {
+  html, body, #root, .app {
+    margin: 0 !important;
+    margin-left: 17px !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+    background: white !important;
+
+  }
+
+  .app h1 {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .main-form {
+    zoom: 69%;
+    page-break-inside: avoid;
+    margin: 0 auto !important;
+    width: fit-content !important;
+    padding: 0 !important;
+  }
+
+  * {
+    overflow: visible !important;
+  }
+
+  button,
+  .logout,
+  .go-back-button,
+  .submit-button,
+  .clear-button,
+  .print-button,
+  .vite-logo,
+  header,
+  footer {
+    display: none !important;
+  }
+}
+

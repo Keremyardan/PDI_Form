@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "../components/FormView.css"
 import { useNavigate } from 'react-router-dom';
 import PdiForm from './PdiForm';
+import GoBackButton from './GoBackButton';
 
 function FormView() {
 
@@ -60,6 +61,7 @@ function FormView() {
 
   return (
     <div className='form-view-container'>
+      <GoBackButton/>
       <h2 className='error-message'>PDI Formlarım</h2>
 
       {error && <p className='error-message'>{error}</p>}
