@@ -8,8 +8,11 @@ import FormDetail from './components/FormDetails';
 
 function App() {
   const [role, setRole] = useState(null);
+  
 
 useEffect(() => {
+
+  
   const storedRole = localStorage.getItem("role");
   if (storedRole) setRole(storedRole);
 }, []);
@@ -28,6 +31,7 @@ useEffect(() => {
         <Route path="/pdi-form" element={role ? <PdiForm /> : <Navigate to="/login" />} />
         <Route path="*" element={<Navigate to="/login" />} />
         <Route path='/form-detail/:id' element={<FormDetail/>}/>
+        <Route path="/formview" element={<FormView />} />
       </Routes>
     </Router>
   );

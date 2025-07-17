@@ -3,13 +3,19 @@ import '../components/PdiForm.css';
 import logo from "../assets/cherylogo.svg"
 import { LogOut } from "../components/Logout"
 import SvgCar from "./SvgCar"
+import { useNavigate } from 'react-router-dom';
+import GoBackButton from "../components/GoBackButton";
+
 
 function PdiForm({ isReadOnly = false, form = {} }) {
     const [formData, setFormData] = useState({});
     const [hoveredPart, setHoveredPart] = useState(null);
     const [selectedParts, setSelectedParts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
+
+
         if (!form || Object.keys(form).length === 0) return;
 
         setFormData(prev => ({
@@ -124,7 +130,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
             }
 
             alert(isUpdate ? "Form başarıyla güncellendi!" : "Form başarıyla gönderildi!");
-            window.location.reload();
+            navigate("/formview");
         } catch (error) {
             console.error("Hata", error);
             alert(`Bir hata oluştu: ${error.message}`);
@@ -135,6 +141,8 @@ function PdiForm({ isReadOnly = false, form = {} }) {
 
     return (
         <div className="main-form">
+                               <GoBackButton />
+                            <button onClick={LogOut} className='logout'>Çıkış Yap</button>
             <div className="pdi-form1">
 
                 <div className="horizontal-container">
@@ -151,9 +159,12 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                         </div>
                     </div>
                     <div className="first-row3">
+                  
                         <div className="pdiimage-cell">
 
-                            <button onClick={LogOut} className='logout'>Çıkış Yap</button>
+
+               
+
                             <img className="image" src={logo} alt="logo" />
 
 
@@ -219,7 +230,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                         />
                     </div>
 
-                    <div className="second-cell"><span className="cell-text">Kontrol Tarihi: </span><input
+                    <div className="second-cell"><span className="cell-text">Tarih </span><input
                         type="date"
                         className='dateinput'
                         name="kontrolTarihi"
@@ -392,7 +403,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                                     <div className="fuel-litre">
                                         <span className='fuel-type-headers'>LİTRE:</span>
                                         <input
-                                        className='fuel-box'
+                                            className='fuel-box'
                                             type="text"
                                             name="fuelLitres1"
                                             value={formData.fuelLitres1 || ''}
@@ -402,7 +413,7 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                                         />
 
                                         <input
-                                        className='fuel-box'
+                                            className='fuel-box'
                                             type="text"
                                             name="fuelLitres2"
                                             value={formData.fuelLitres2 || ''}
@@ -461,14 +472,6 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                     </div>
                     <div className='buttons'>
                         <button
-                            type="submit"
-                            className="submit-button"
-                            onClick={handleSubmit}
-                        >
-                            {formData.id ? "Güncelle" : "Gönder"}
-                        </button>
-
-                        <button
                             type="button"
                             className="clear-button"
                             onClick={() => {
@@ -481,6 +484,15 @@ function PdiForm({ isReadOnly = false, form = {} }) {
                         >
                             Formu Temizle
                         </button>
+                        <button
+                            type="submit"
+                            className="submit-button"
+                            onClick={handleSubmit}
+                        >
+                            {formData.id ? "Güncelle" : "Gönder"}
+                        </button>
+
+
                     </div>
 
                 </div>

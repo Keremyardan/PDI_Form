@@ -1,0 +1,22 @@
+.go-back-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  left: 30px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+}
+
+.go-back-button img {
+  width: 24px;
+  height: 24px;
+  display: block;
+  pointer-events: auto;
+}
