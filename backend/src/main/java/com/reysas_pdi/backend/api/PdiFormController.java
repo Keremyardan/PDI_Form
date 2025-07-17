@@ -60,6 +60,13 @@ public class PdiFormController {
 
 
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','OFFICER')")
+    public ResponseEntity<ResultData<PdiForm>> updateForm(@PathVariable Long id,
+                                                          @RequestBody com.reysas_pdi.backend.dto.request.pdiform.PdiFormUpdateRequest request) {
+        ResultData<PdiForm> result = iPdiFormService.update(id, request);
+        return ResponseEntity.ok(result);
+    }
 
 
 
@@ -108,6 +115,7 @@ public class PdiFormController {
         PdiForm entity = pdiFormRepo.findById(id).orElseThrow(() -> new RuntimeException("Form Bululamadı"));
 
         PdiFormResponse dto = PdiFormResponse.builder()
+                .id(entity.getId())
                 .pdiYeri(entity.getPdiYeri())
                 .model(entity.getModel())
                 .vin(entity.getVin())

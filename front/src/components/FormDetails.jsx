@@ -5,37 +5,38 @@ import PdiForm from '../components/PdiForm';
 const FormDetail = () => {
   const { id } = useParams();
   const [form, setForm] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchForm = async () => {
-      try {
-       const auth = localStorage.getItem("auth");
-if (!auth) {
-  console.warn("Giriş yapılmamış");
-  return;
-}
+      const credentials = localStorage.getItem("auth");
+      if (!credentials) {
+        setError("Giriş yapılmamış.");
+        return;
+      }
 
-const res = await fetch(`http://localhost:8080/api/pdi-form/${id}`, {
-  method: "GET",
-  headers: {
-    "Authorization": `Basic ${auth}`
-  },
-  credentials: "include"
-});
-        if (!res.ok) throw new Error("Veri alınamadı");
-        const data = await res.json();
+      try {
+        const response = await fetch(`http://localhost:8080/api/pdi-form/${id}`, {
+          headers: {
+            Authorization: `Basic ${credentials}`
+          }
+        });
+
+        if (!response.ok) throw new Error("Form alınamadı");
+        const data = await response.json();
         setForm(data);
-      } catch (e) {
-        console.error("Form çekilemedi:", e);
+      } catch (err) {
+        console.error(err);
+        setError("Form yüklenemedi.");
       }
     };
 
     fetchForm();
   }, [id]);
 
+  if (error) return <p>{error}</p>;
   if (!form) return <p>Yükleniyor...</p>;
 
-  return <PdiForm isReadOnly={true} form={form} />;
+  return <PdiForm form={form} isReadOnly={false} />;
 };
-
 export default FormDetail;

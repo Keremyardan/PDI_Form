@@ -13,6 +13,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 public class PdiFormResponse {
+    private Long id;
     private Date createdAt;
     private String createdByName;
     private String pdiYeri;
@@ -82,5 +83,7 @@ public class PdiFormResponse {
     private String damageDescription6;
     private String damageDescription7;
     private String damageDescription8;
+
+
 
 }

@@ -1,29 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import '../components/PdiForm.css';
 import logo from "../assets/cherylogo.svg"
-import {LogOut} from "../components/Logout"
+import { LogOut } from "../components/Logout"
 import SvgCar from "./SvgCar"
 
 function PdiForm({ isReadOnly = false, form = {} }) {
-    const [formData, setFormData] = useState(form);
+    const [formData, setFormData] = useState({});
     const [hoveredPart, setHoveredPart] = useState(null);
     const [selectedParts, setSelectedParts] = useState([]);
 
     useEffect(() => {
         if (!form || Object.keys(form).length === 0) return;
 
-        setFormData(form);
+        setFormData(prev => ({
+            ...form,
+            id: form.id
+        }));
+
 
         const parts = [
             "solOnKapi", "sagOnKapi", "onKaput", "arkaTampon", "tavan", "onTampon",
             "arkaBagaj", "sagOnCamurluk", "solOnCamurluk", "sagArkaCamurluk",
             "solArkaCamurluk", "sagArkaKapi", "solArkaKapi"
         ];
-
         const selectedFromForm = parts.filter(part => form[part]);
         setSelectedParts(selectedFromForm);
-        console.log(selectedFromForm)
+
+        console.log("Gelen form id:", form.id);
     }, [form]);
+
 
 
 
@@ -50,75 +55,83 @@ function PdiForm({ isReadOnly = false, form = {} }) {
     };
 
     const handleSubmit = async (event) => {
+        console.log("formData.id nedir:", formData.id);
+
         event.preventDefault();
 
-const filteredFormData = Object.fromEntries(
-  Object.entries(formData).filter(([key, value]) => {
-    if (key.startsWith("damageDescription")) return true; // 🔒 asla atma
-    if (typeof value === "boolean") return true;
-    if (typeof value === "string") return value.trim() !== "";
-    return false;
-  })
-);
-
-
-
         const credentials = localStorage.getItem("auth");
-
         if (!credentials) {
             alert("Lütfen önce giriş yapın.");
             return;
         }
 
-        const base64Credentials = credentials;
+        const isUpdate = !!formData.id;
+        const endpoint = isUpdate
+            ? `http://localhost:8080/api/pdi-form/${formData.id}`
+            : `http://localhost:8080/api/pdi-form/submit`;
 
+        const method = isUpdate ? "PUT" : "POST";
+
+        const fullData = {
+            id: formData.id,
+            pdiYeri: formData.pdiYeri,
+            model: formData.model,
+            vin: formData.vin,
+            kmBilgisi: formData.kmBilgisi,
+            kontrolTarihi: formData.kontrolTarihi,
+            fuelLitres1: formData.fuelLitres1,
+            fuelLitres2: formData.fuelLitres2,
+            fuelTypeBenzin1: formData.fuelTypeBenzin1,
+            fuelTypeBenzin2: formData.fuelTypeBenzin2,
+            gurasyon: formData.gurasyon,
+            firstAid: formData.firstaid,
+            additionalNotes: formData.additionalNotes,
+            solOnKapi: selectedParts.includes("solOnKapi"),
+            sagOnKapi: selectedParts.includes("sagOnKapi"),
+            onKaput: selectedParts.includes("onKaput"),
+            arkaTampon: selectedParts.includes("arkaTampon"),
+            tavan: selectedParts.includes("tavan"),
+            onTampon: selectedParts.includes("onTampon"),
+            arkaBagaj: selectedParts.includes("arkaBagaj"),
+            sagOnCamurluk: selectedParts.includes("sagOnCamurluk"),
+            solOnCamurluk: selectedParts.includes("solOnCamurluk"),
+            sagArkaCamurluk: selectedParts.includes("sagArkaCamurluk"),
+            solArkaCamurluk: selectedParts.includes("solArkaCamurluk"),
+            sagArkaKapi: selectedParts.includes("sagArkaKapi"),
+            solArkaKapi: selectedParts.includes("solArkaKapi"),
+            ...Object.fromEntries(
+                Array.from({ length: 29 }).map((_, i) => [`functionalCheck${i}`, formData[`functionalCheck${i}`] || false])
+            ),
+            ...Object.fromEntries(
+                Array.from({ length: 9 }).map((_, i) => [`damageDescription${i}`, formData[`damageDescription${i}`] || ""])
+            )
+        };
 
         try {
-            const response = await fetch("http://localhost:8080/api/pdi-form/submit", {
-                method: 'POST',
+            const response = await fetch(endpoint, {
+                method,
                 headers: {
                     "Content-Type": "application/json",
-                   "Authorization": `Basic ${base64Credentials}` 
+                    Authorization: `Basic ${credentials}`
                 },
-                credentials: "include",
-                mode: "cors",
-                body: JSON.stringify({
-               ...formData,
-
-                    solOnKapi: selectedParts.includes("solOnKapi"),
-                    sagOnKapi: selectedParts.includes("sagOnKapi"),
-                    onKaput: selectedParts.includes("onKaput"),
-                    arkaTampon: selectedParts.includes("arkaTampon"),
-                    tavan: selectedParts.includes("tavan"),
-                    onTampon: selectedParts.includes("onTampon"),
-                    arkaBagaj: selectedParts.includes("arkaBagaj"),
-                    sagOnCamurluk: selectedParts.includes("sagOnCamurluk"),
-                    solOnCamurluk: selectedParts.includes("solOnCamurluk"),
-                    sagArkaCamurluk: selectedParts.includes("sagArkaCamurluk"),
-                    solArkaCamurluk: selectedParts.includes("solArkaCamurluk"),
-                    sagArkaKapi: selectedParts.includes("sagArkaKapi"),
-                    solArkaKapi: selectedParts.includes("solArkaKapi")
-                })
-
-
+                body: JSON.stringify(fullData),
             });
-
-
 
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error("Sunucu Hatası:", errorText);
-                throw new Error(`Form gönderimi başarısız: ${response.status} - ${errorText}`);
+                throw new Error(`Form gönderimi başarısız: ${response.status}`);
             }
 
-            alert("Form başarıyla gönderildi");
+            alert(isUpdate ? "Form başarıyla güncellendi!" : "Form başarıyla gönderildi!");
             window.location.reload();
         } catch (error) {
             console.error("Hata", error);
             alert(`Bir hata oluştu: ${error.message}`);
         }
-
     };
+
+
 
     return (
         <div className="main-form">
@@ -139,33 +152,50 @@ const filteredFormData = Object.fromEntries(
                     </div>
                     <div className="first-row3">
                         <div className="pdiimage-cell">
-                             
-                                <button onClick={LogOut} className='logout'>Çıkış Yap</button>
-                                 <img className="image" src={logo} alt="logo" />
-                      
-                           
+
+                            <button onClick={LogOut} className='logout'>Çıkış Yap</button>
+                            <img className="image" src={logo} alt="logo" />
+
+
                         </div>
                     </div>
                 </div>
                 <div className="second-row">
-                    <div className="second-cell"><span className="cell-text" >PDI Yeri: </span><textarea
-                        className='kmbox'
-                        name="pdiYeri"
-                        value={formData.pdiYeri || ''}
-                        onChange={handleChange}
-                        disabled={isReadOnly}
-                    />
-                    </div>
                     <div className="second-cell">
-                        <span className="cell-text">Model: </span>
-                        <textarea
-                            className='kmbox'
-                            name="model"
-                            value={formData.model || ''}
+                        <span className="cell-text">PDI Yeri: </span>
+                        <select
+                            className="kmbox1"
+                            name="pdiYeri"
+                            value={formData.pdiYeri || ''}
                             onChange={handleChange}
                             disabled={isReadOnly}
-                        />
+                        >
+                            <option value="">Seçiniz</option>
+                            <option value="CHERY">CHERY</option>
+
+                        </select>
                     </div>
+
+                   <div className="second-cell">
+  <span className="cell-text">Model: </span>
+  <select
+    className="kmbox1"
+    name="model"
+    value={formData.model || ''}
+    onChange={handleChange}
+    disabled={isReadOnly}
+  >
+    <option value="">Seçiniz</option>
+    <option value="Omoda 5">Omoda 5</option>
+    <option value="Omoda 5 Pro">Omoda 5 Pro</option>
+    <option value="Tiggo 3">Tiggo 3</option>
+    <option value="Tiggo 7 Pro">Tiggo 7 Pro</option>
+    <option value="Tiggo 7 Pro Max">Tiggo 7 Pro Max</option>
+    <option value="Tiggo 8">Tiggo 8</option>
+    <option value="Tiggo 8 Pro Max">Tiggo 8 Pro Max</option>
+  </select>
+</div>
+
 
                     <div className="second-cell">
                         <span className="cell-text">Vin: </span>
@@ -218,7 +248,7 @@ const filteredFormData = Object.fromEntries(
 
                     <div className="lines">
                         <div >
-                           
+
                             <div className="seventh-cell">{"1-)"}</div>
                             <div className="seventh-cell">{"2-)"}</div>
                             <div className="seventh-cell">{"3-)"}</div>
@@ -230,18 +260,18 @@ const filteredFormData = Object.fromEntries(
                             <div className="seventh-cell">{"9-)"}</div>
                         </div>
                         <div >
-{[...Array(9)].map((_, index) => (
-  <div className="eighth-cell" key={index}>
-    <textarea
-      className="eighth-cell-textarea"
-      name={`damageDescription${index}`}
-      value={formData[`damageDescription${index}`] || ''}
-      onChange={handleChange}
-      disabled={isReadOnly}
-    />
-  </div>
-))}
-                           
+                            {[...Array(9)].map((_, index) => (
+                                <div className="eighth-cell" key={index}>
+                                    <textarea
+                                        className="eighth-cell-textarea"
+                                        name={`damageDescription${index}`}
+                                        value={formData[`damageDescription${index}`] || ''}
+                                        onChange={handleChange}
+                                        disabled={isReadOnly}
+                                    />
+                                </div>
+                            ))}
+
                         </div>
                     </div>
                 </div>
@@ -429,7 +459,11 @@ const filteredFormData = Object.fromEntries(
                     </div>
                     {!isReadOnly && (
                         <div className='submit-button'>
-                            <button onClick={handleSubmit}>Gönder</button>
+                            <button onClick={handleSubmit}>
+                                {formData?.id ? "Güncelle" : "Gönder"}
+                            </button>
+
+
                         </div>
                     )}
 

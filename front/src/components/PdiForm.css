@@ -6,9 +6,9 @@
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px; 
-    background-color: #eee;
-
+        background-color: #fff;
 }
+
 
 
 .pdi-form1 {
@@ -131,6 +131,14 @@
 .kmbox{
     width: 100px;
     height: 10px;
+    margin-right: 10px;
+    resize: none;
+    background-color: #eee;
+}
+
+.kmbox1{
+    width: 100px;
+    height: 20px;
     margin-right: 10px;
     resize: none;
     background-color: #eee;
@@ -409,12 +417,14 @@
     font-size: 0.8em;
 }
 
+
 .additionalNotes {
 width: 300px;
 height: 300px;
 resize: none;
 margin-left:15px;
 margin-top: 5px;
+background-color: #eee;
 }
 
 
@@ -452,3 +462,16 @@ margin-top: 5px;
     cursor: pointer;
     width: 960px;
 }
+input,
+textarea,
+select {
+  color: #000;
+
+  border: 1px solid #ccc;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #777;
+}
+

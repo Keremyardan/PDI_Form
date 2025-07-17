@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "../components/FormView.css"
 import { useNavigate } from 'react-router-dom';
+import PdiForm from './PdiForm';
 
 function FormView() {
 
@@ -59,13 +60,13 @@ function FormView() {
 
   return (
     <div className='form-view-container'>
-      <h2>PDI Formlarım</h2>
+      <h2 className='error-message'>PDI Formlarım</h2>
 
       {error && <p className='error-message'>{error}</p>}
 
       <div className="form-card-container">
         {forms.length === 0 && !error ? (
-          <p>Kayıtlı form yok</p>
+          <p className='error-message'>Kayıtlı form yok</p>
         ) : (
           forms.map((form) => (
             <div key={form.id} className="form-card">

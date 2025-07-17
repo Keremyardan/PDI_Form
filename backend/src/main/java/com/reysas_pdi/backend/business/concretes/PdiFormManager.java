@@ -7,6 +7,7 @@
     import com.reysas_pdi.backend.dao.OfficerRepo;
     import com.reysas_pdi.backend.dao.PdiFormRepo;
     import com.reysas_pdi.backend.dto.request.pdiform.PdiFormSaveRequest;
+    import com.reysas_pdi.backend.dto.request.pdiform.PdiFormUpdateRequest;
     import com.reysas_pdi.backend.entity.Administrator;
     import com.reysas_pdi.backend.entity.Officer;
     import com.reysas_pdi.backend.entity.PdiForm;
@@ -26,6 +27,7 @@
         private AdministratorRepo administratorRepo;
 
         private final PdiFormRepo pdiFormRepo;
+
 
         public PdiFormManager(PdiFormRepo pdiFormRepo) {
             this.pdiFormRepo = pdiFormRepo;
@@ -55,6 +57,87 @@
             form.setOfficer(officer);
             return ResultHelper.created(pdiFormRepo.save(form));
         }
+
+        @Override
+        public ResultData<PdiForm> update(Long id, PdiFormUpdateRequest request) {
+            PdiForm form = pdiFormRepo.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Form bulunamadı"));
+
+            form.setPdiYeri(request.getPdiYeri());
+            form.setModel(request.getModel());
+            form.setVin(request.getVin());
+            form.setKmBilgisi(request.getKmBilgisi());
+            form.setKontrolTarihi(request.getKontrolTarihi());
+
+            form.setFuelLitres1(request.getFuelLitres1());
+            form.setFuelLitres2(request.getFuelLitres2());
+            form.setFuelTypeBenzin1(request.getFuelTypeBenzin1());
+            form.setFuelTypeBenzin2(request.getFuelTypeBenzin2());
+            form.setGurasyon(request.getGurasyon());
+            form.setFirstAid(request.getFirstAid());
+            form.setAdditionalNotes(request.getAdditionalNotes());
+
+            form.setSolOnKapi(request.getSolOnKapi());
+            form.setSagOnKapi(request.getSagOnKapi());
+            form.setOnKaput(request.getOnKaput());
+            form.setArkaTampon(request.getArkaTampon());
+            form.setTavan(request.getTavan());
+            form.setOnTampon(request.getOnTampon());
+            form.setArkaBagaj(request.getArkaBagaj());
+            form.setSagOnCamurluk(request.getSagOnCamurluk());
+            form.setSolOnCamurluk(request.getSolOnCamurluk());
+            form.setSagArkaCamurluk(request.getSagArkaCamurluk());
+            form.setSolArkaCamurluk(request.getSolArkaCamurluk());
+            form.setSagArkaKapi(request.getSagArkaKapi());
+            form.setSolArkaKapi(request.getSolArkaKapi());
+
+            form.setFunctionalCheck0(request.getFunctionalCheck0());
+            form.setFunctionalCheck1(request.getFunctionalCheck1());
+            form.setFunctionalCheck2(request.getFunctionalCheck2());
+            form.setFunctionalCheck3(request.getFunctionalCheck3());
+            form.setFunctionalCheck4(request.getFunctionalCheck4());
+            form.setFunctionalCheck5(request.getFunctionalCheck5());
+            form.setFunctionalCheck6(request.getFunctionalCheck6());
+            form.setFunctionalCheck7(request.getFunctionalCheck7());
+            form.setFunctionalCheck8(request.getFunctionalCheck8());
+            form.setFunctionalCheck9(request.getFunctionalCheck9());
+            form.setFunctionalCheck10(request.getFunctionalCheck10());
+            form.setFunctionalCheck11(request.getFunctionalCheck11());
+            form.setFunctionalCheck12(request.getFunctionalCheck12());
+            form.setFunctionalCheck13(request.getFunctionalCheck13());
+            form.setFunctionalCheck14(request.getFunctionalCheck14());
+            form.setFunctionalCheck15(request.getFunctionalCheck15());
+            form.setFunctionalCheck16(request.getFunctionalCheck16());
+            form.setFunctionalCheck17(request.getFunctionalCheck17());
+            form.setFunctionalCheck18(request.getFunctionalCheck18());
+            form.setFunctionalCheck19(request.getFunctionalCheck19());
+            form.setFunctionalCheck20(request.getFunctionalCheck20());
+            form.setFunctionalCheck21(request.getFunctionalCheck21());
+            form.setFunctionalCheck22(request.getFunctionalCheck22());
+            form.setFunctionalCheck23(request.getFunctionalCheck23());
+            form.setFunctionalCheck24(request.getFunctionalCheck24());
+            form.setFunctionalCheck25(request.getFunctionalCheck25());
+            form.setFunctionalCheck26(request.getFunctionalCheck26());
+            form.setFunctionalCheck27(request.getFunctionalCheck27());
+            form.setFunctionalCheck28(request.getFunctionalCheck28());
+
+            form.setDamageDescription0(request.getDamageDescription0());
+            form.setDamageDescription1(request.getDamageDescription1());
+            form.setDamageDescription2(request.getDamageDescription2());
+            form.setDamageDescription3(request.getDamageDescription3());
+            form.setDamageDescription4(request.getDamageDescription4());
+            form.setDamageDescription5(request.getDamageDescription5());
+            form.setDamageDescription6(request.getDamageDescription6());
+            form.setDamageDescription7(request.getDamageDescription7());
+            form.setDamageDescription8(request.getDamageDescription8());
+
+            PdiForm updatedForm = pdiFormRepo.save(form);
+            return new ResultData<>(true, "Form başarıyla güncellendi", "200", updatedForm);
+
+
+
+        }
+
 
         private PdiForm buildFormFromRequest(PdiFormSaveRequest req) {
             return PdiForm.builder()

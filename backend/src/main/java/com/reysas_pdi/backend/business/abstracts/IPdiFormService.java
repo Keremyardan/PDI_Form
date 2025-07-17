@@ -2,6 +2,7 @@ package com.reysas_pdi.backend.business.abstracts;
 
 import com.reysas_pdi.backend.core.config.result.ResultData;
 import com.reysas_pdi.backend.dto.request.pdiform.PdiFormSaveRequest;
+import com.reysas_pdi.backend.dto.request.pdiform.PdiFormUpdateRequest;
 import com.reysas_pdi.backend.entity.PdiForm;
 
 import java.security.Principal;
@@ -10,6 +11,7 @@ import java.util.List;
 public interface IPdiFormService {
 
     ResultData<PdiForm> save(PdiFormSaveRequest pdiFormSaveRequest, Principal principal);
+    ResultData<PdiForm> update(Long id, PdiFormUpdateRequest request);
 
     PdiForm getById(Long id);
 
