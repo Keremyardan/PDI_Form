@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./UserManagement.css";
+import GoBackButton from "./GoBackButton"
 
 const UserManagement = () => {
   const [officers, setOfficers] = useState([]);
@@ -7,8 +8,10 @@ const UserManagement = () => {
   const [newAdmin, setNewAdmin] = useState({ email: "", password: "" });
   const [newOfficer, setNewOfficer] = useState({ email: "", password: "" });
 
-  const [adminMessage, setAdminMessage] = useState("");
-  const [officerMessage, setOfficerMessage] = useState("");
+  const [createAdminMessage, setCreateAdminMessage] = useState("");
+  const [createOfficerMessage, setCreateOfficerMessage] = useState("");
+  const [deleteAdminMessage, setDeleteAdminMessage] = useState("");
+  const [deleteOfficerMessage, setDeleteOfficerMessage] = useState("");
 
   const [selectedAdminId, setSelectedAdminId] = useState("");
   const [selectedOfficerId, setSelectedOfficerId] = useState("");
@@ -35,7 +38,11 @@ const UserManagement = () => {
   };
 
   const createAdmin = async () => {
-    setAdminMessage("");
+    setCreateAdminMessage("");
+    setCreateOfficerMessage("");
+    setDeleteAdminMessage("");
+    setDeleteOfficerMessage("");
+
     try {
       const res = await fetch("http://localhost:8080/administrators/save", {
         method: "POST",
@@ -48,19 +55,23 @@ const UserManagement = () => {
 
       const data = await res.json();
       if (res.ok && data.success) {
-        setAdminMessage("✅ Admin başarıyla oluşturuldu.");
+        setCreateAdminMessage("✅ Admin başarıyla oluşturuldu.");
         setNewAdmin({ email: "", password: "" });
         fetchAdmins();
       } else {
-        setAdminMessage("❌ Admin oluşturulamadı: " + (data.message || "Hata"));
+        setCreateAdminMessage("❌ Böyle bir kullanıcı mevcut: ");
       }
     } catch (error) {
-      setAdminMessage("❌ Sunucu hatası: " + error.message);
+      setCreateAdminMessage("❌ Sunucu hatası: " + error.message);
     }
   };
 
   const createOfficer = async () => {
-    setOfficerMessage("");
+    setCreateOfficerMessage("");
+    setCreateAdminMessage("");
+    setDeleteAdminMessage("");
+    setDeleteOfficerMessage("");
+
     try {
       const res = await fetch("http://localhost:8080/administrators/create-officer", {
         method: "POST",
@@ -73,35 +84,69 @@ const UserManagement = () => {
 
       const data = await res.json();
       if (res.ok && data.success) {
-        setOfficerMessage("✅ Officer başarıyla oluşturuldu.");
+        setCreateOfficerMessage("✅ Officer başarıyla oluşturuldu.");
         setNewOfficer({ email: "", password: "" });
         fetchOfficers();
       } else {
-        setOfficerMessage("❌ Officer oluşturulamadı: " + (data.message || "Hata"));
+        setCreateOfficerMessage("❌ Böyle bir kullanıcı mevcut: ");
       }
     } catch (error) {
-      setOfficerMessage("❌ Sunucu hatası: " + error.message);
+      setCreateOfficerMessage("❌ Sunucu hatası: " + error.message);
     }
   };
 
   const deleteAdmin = async () => {
+    setDeleteAdminMessage("");
+    setCreateAdminMessage("");
+    setCreateOfficerMessage("");
+    setDeleteOfficerMessage("");
+
     if (!selectedAdminId) return;
-    await fetch(`http://localhost:8080/administrators/delete-admin/${selectedAdminId}`, {
-      method: "DELETE",
-      headers: { Authorization: `Basic ${auth}` }
-    });
-    setSelectedAdminId("");
-    fetchAdmins();
+
+    try {
+      const res = await fetch(`http://localhost:8080/administrators/delete-admin/${selectedAdminId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Basic ${auth}` }
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setDeleteAdminMessage("✅ Admin başarıyla silindi.");
+        setSelectedAdminId("");
+        fetchAdmins();
+      } else {
+        setDeleteAdminMessage("❌ Admin silinemedi: ");
+      }
+    } catch (error) {
+      setDeleteAdminMessage("❌ Sunucu hatası: " + error.message);
+    }
   };
 
   const deleteOfficer = async () => {
+    setDeleteOfficerMessage("");
+    setCreateAdminMessage("");
+    setCreateOfficerMessage("");
+    setDeleteAdminMessage("");
+
     if (!selectedOfficerId) return;
-    await fetch(`http://localhost:8080/administrators/delete-officer/${selectedOfficerId}`, {
-      method: "DELETE",
-      headers: { Authorization: `Basic ${auth}` }
-    });
-    setSelectedOfficerId("");
-    fetchOfficers();
+
+    try {
+      const res = await fetch(`http://localhost:8080/administrators/delete-officer/${selectedOfficerId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Basic ${auth}` }
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setDeleteOfficerMessage("✅ Officer başarıyla silindi.");
+        setSelectedOfficerId("");
+        fetchOfficers();
+      } else {
+        setDeleteOfficerMessage("❌ Officer silinemedi: ");
+      }
+    } catch (error) {
+      setDeleteOfficerMessage("❌ Sunucu hatası: " + error.message);
+    }
   };
 
   useEffect(() => {
@@ -110,81 +155,88 @@ const UserManagement = () => {
   }, []);
 
   return (
-  <div className="user-management">
-    <div className="form-section">
-      <div className="create-section">
-        <h2>Yeni Admin Oluştur</h2>
-        <input
-          className="form-input"
-          type="email"
-          placeholder="Email"
-          value={newAdmin.email}
-          onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
-        />
-        <input
-          className="form-input"
-          type="password"
-          placeholder="Şifre"
-          value={newAdmin.password}
-          onChange={(e) => setNewAdmin({ ...newAdmin, password: e.target.value })}
-        />
-        <button className="form-button" onClick={createAdmin}>Admin Ekle</button>
-        {adminMessage && <p className="message">{adminMessage}</p>}
+    <div className="user-management">
+      <GoBackButton />
+     <div className="form-section">
+  <div className="create-section">
+    <h2>Yeni Admin Oluştur</h2>
+    <input
+      className="form-input"
+      type="email"
+      placeholder="Email"
+      value={newAdmin.email}
+      onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
+    />
+    <input
+      className="form-input"
+      type="password"
+      placeholder="Şifre"
+      value={newAdmin.password}
+      onChange={(e) => setNewAdmin({ ...newAdmin, password: e.target.value })}
+    />
+    <button className="form-button1" onClick={createAdmin}>Kaydet</button>
+    {/* admin oluşturma mesajı en altta */}
+    {createAdminMessage && <p className="message">{createAdminMessage}</p>}
 
-        <h2>Yeni Officer Oluştur</h2>
-        <input
-          className="form-input"
-          type="email"
-          placeholder="Email"
-          value={newOfficer.email}
-          onChange={(e) => setNewOfficer({ ...newOfficer, email: e.target.value })}
-        />
-        <input
-          className="form-input"
-          type="password"
-          placeholder="Şifre"
-          value={newOfficer.password}
-          onChange={(e) => setNewOfficer({ ...newOfficer, password: e.target.value })}
-        />
-        <button className="form-button" onClick={createOfficer}>Officer Ekle</button>
-        {officerMessage && <p className="message">{officerMessage}</p>}
-      </div>
-
-      <div className="delete-section">
-        <h2>Admin Kullanıcıyı Sil</h2>
-        <select
-          className="select-box"
-          value={selectedAdminId}
-          onChange={(e) => setSelectedAdminId(e.target.value)}
-        >
-          <option value="">Admin seç</option>
-          {admins.map((admin) => (
-            <option key={admin.id} value={admin.id}>
-              {admin.email}
-            </option>
-          ))}
-        </select>
-        <button className="form-button" onClick={deleteAdmin} disabled={!selectedAdminId}>Sil</button>
-
-        <h2>Officer Kullanıcıyı Sil</h2>
-        <select
-          className="select-box"
-          value={selectedOfficerId}
-          onChange={(e) => setSelectedOfficerId(e.target.value)}
-        >
-          <option value="">Officer seç</option>
-          {officers.map((officer) => (
-            <option key={officer.id} value={officer.id}>
-              {officer.email}
-            </option>
-          ))}
-        </select>
-        <button className="form-button" onClick={deleteOfficer} disabled={!selectedOfficerId}>Sil</button>
-      </div>
-    </div>
+    <h2>Yeni Officer Oluştur</h2>
+    <input
+      className="form-input"
+      type="email"
+      placeholder="Email"
+      value={newOfficer.email}
+      onChange={(e) => setNewOfficer({ ...newOfficer, email: e.target.value })}
+    />
+    <input
+      className="form-input"
+      type="password"
+      placeholder="Şifre"
+      value={newOfficer.password}
+      onChange={(e) => setNewOfficer({ ...newOfficer, password: e.target.value })}
+    />
+    <button className="form-button1" onClick={createOfficer}>Kaydet</button>
+    {/* officer oluşturma mesajı en altta */}
+    {createOfficerMessage && <p className="message">{createOfficerMessage}</p>}
   </div>
-);
 
+  <div className="delete-section">
+    <h2>Admin Sil</h2>
+    <select
+      className="select-box"
+      value={selectedAdminId}
+      onChange={(e) => setSelectedAdminId(e.target.value)}
+    >
+      <option value="">Admin seç</option>
+      {admins.map((admin) => (
+        <option key={admin.id} value={admin.id}>
+          {admin.email}
+        </option>
+      ))}
+    </select>
+    <button className="form-button" onClick={deleteAdmin} disabled={!selectedAdminId}>Sil</button>
+    {/* admin silme mesajı en altta */}
+    {deleteAdminMessage && <p className="message">{deleteAdminMessage}</p>}
+
+    <h2>Officer Sil</h2>
+    <select
+      className="select-box"
+      value={selectedOfficerId}
+      onChange={(e) => setSelectedOfficerId(e.target.value)}
+    >
+      <option value="">Officer seç</option>
+      {officers.map((officer) => (
+        <option key={officer.id} value={officer.id}>
+          {officer.email}
+        </option>
+      ))}
+    </select>
+    <button className="form-button" onClick={deleteOfficer} disabled={!selectedOfficerId}>Sil</button>
+    {/* officer silme mesajı en altta */}
+    {deleteOfficerMessage && <p className="message">{deleteOfficerMessage}</p>}
+  </div>
+</div>
+
+    </div>
+  );
 };
 
 export default UserManagement;

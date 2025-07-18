@@ -5,7 +5,7 @@ import { LogOut } from './Logout';
 function SelectionScreen() {
   const navigate = useNavigate();
 
-  const role = localStorage.getItem("role"); // ADMIN veya OFFICER gelecek
+  const role = localStorage.getItem("role");
 
   return (
     <div>

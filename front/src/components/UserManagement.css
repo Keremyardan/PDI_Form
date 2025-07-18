@@ -6,6 +6,7 @@
   background-color: #f7f7f7;
   height: 120vh;
   width: 100vw;
+
 }
 
 h2 {
@@ -22,11 +23,12 @@ h2 {
   background-color: #ffffff;
   color: #000000;
   margin-bottom: 10px;
+  margin-left: 10px;
 }
 
 .select-box {
   padding: 10px;
-  width: 250px;
+  width: 350px;
   border-radius: 5px;
   border: 1px solid #ccc;
   background-color: #ffffff;
@@ -36,18 +38,47 @@ h2 {
 }
 
 .form-button {
-  padding: 10px;
-  width: 250px;
+  padding: 9px;
+  width: 320px;
   background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 20px;
+  margin-left: 10px;
+
+}
+
+
+.form-button {
+  padding: 9px;
+  width: 320px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+.form-button1 {
+  padding: 9px;
+  width: 100px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-left: 10px;
+flex-wrap: nowrap;
 }
 
 .form-button:hover {
   background-color: #45a049;
+  
 }
 
 .message {
@@ -73,6 +104,7 @@ h2 {
   width: 100%;
   max-width: 1000px;
   margin-top: 20px;
+  
 }
 
 .create-section{
@@ -80,7 +112,8 @@ h2 {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 700px;
+width: 700px;
+flex-wrap: nowrap;
     
 }
 .delete-section {
@@ -89,5 +122,6 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 700px;
+  
 }
 
