@@ -24,4 +24,8 @@ public class OfficerUpdateRequest {
     @NotNull(message = "Email can not be empty")
     @Size(min=1, max=50, message = "name must have characters between 1 and 50")
     private String email;
+
+    @Size(min=6, max=100, message = "Şifre en az 6 karakter olmalıdır")
+    private String password;
+
 }

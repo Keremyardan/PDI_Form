@@ -43,16 +43,20 @@ public class AdministratorManager implements IAdministratorService {
 
     @Override
     public ResultData<Administrator> update(Long id, Administrator administrator) {
+        Administrator existingAdministrator = this.administratorRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
 
-        Administrator existingAdministrator = this.administratorRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
+        if (administrator.getName() != null && !administrator.getName().isBlank()) {
+            existingAdministrator.setName(administrator.getName());
+        }
 
-existingAdministrator.setName(administrator.getName());
-existingAdministrator.setEmail(administrator.getEmail());
+        if (administrator.getPassword() != null && !administrator.getPassword().isBlank()) {
+            existingAdministrator.setPassword(passwordEncoder.encode(administrator.getPassword()));
+        }
 
-Administrator updatedAdministrator = this.administratorRepo.save(existingAdministrator);
-
-return ResultHelper.success(updatedAdministrator);
+        return ResultHelper.success(this.administratorRepo.save(existingAdministrator));
     }
+
 
 
     @Override

@@ -24,4 +24,8 @@ public class AdministratorUpdateRequest {
     @NotNull(message = "Officer Id can not be empty")
     @Min(value=1, message = "Customer id should be greater than 1")
     private Long officerId;
+
+    @Size(min=6, max=100, message = "Şifre en az 6 karakter olmalı")
+    private String password;
+
 }

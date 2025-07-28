@@ -13,6 +13,22 @@ const UserManagement = () => {
   const [deleteAdminMessage, setDeleteAdminMessage] = useState("");
   const [deleteOfficerMessage, setDeleteOfficerMessage] = useState("");
 
+  const [updateAdminMessage, setUpdateAdminMessage] = useState("");
+  const [adminUpdateData, setAdminUpdateData] = useState({ id: "", name: "", officerId: "", password:"" });
+
+  const [updateOfficerMessage, setUpdateOfficerMessage] = useState("");
+  const [officerUpdateData, setOfficerUpdateData] = useState({ id: "", name: "", email: "", password: "" });
+  <input
+    className="form-input"
+    type="password"
+    placeholder="Yeni Şifre (boşsa değişmez)"
+    value={officerUpdateData.password}
+    onChange={(e) => setOfficerUpdateData({ ...officerUpdateData, password: e.target.value })}
+  />
+
+
+
+
   const [selectedAdminId, setSelectedAdminId] = useState("");
   const [selectedOfficerId, setSelectedOfficerId] = useState("");
 
@@ -122,6 +138,59 @@ const UserManagement = () => {
     }
   };
 
+  const updateAdmin = async () => {
+    setUpdateAdminMessage("");
+    try {
+      const res = await fetch("http://localhost:8080/administrators/update", {
+        method: "PUT",
+        headers: {
+          Authorization: `Basic ${auth}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(adminUpdateData)
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setUpdateAdminMessage("✅ Admin başarıyla güncellendi.");
+        setAdminUpdateData({ id: "", name: "", officerId: "" });
+        fetchAdmins();
+      } else {
+        setUpdateAdminMessage("❌ Güncelleme başarısız: " + data.message);
+      }
+    } catch (error) {
+      setUpdateAdminMessage("❌ Sunucu hatası: " + error.message);
+    }
+  };
+
+  const updateOfficer = async () => {
+    setUpdateOfficerMessage("");
+    try {
+      const res = await fetch("http://localhost:8080/officers/update", {
+        method: "PUT",
+        headers: {
+          Authorization: `Basic ${auth}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(officerUpdateData)
+      });
+
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setUpdateOfficerMessage("✅ Officer başarıyla güncellendi.");
+        setOfficerUpdateData({ id: "", name: "" });
+        fetchOfficers();
+      } else {
+        setUpdateOfficerMessage("❌ Güncelleme başarısız: " + data.message);
+      }
+    } catch (error) {
+      setUpdateOfficerMessage("❌ Sunucu hatası: " + error.message);
+    }
+  };
+
+
+
   const deleteOfficer = async () => {
     setDeleteOfficerMessage("");
     setCreateAdminMessage("");
@@ -157,86 +226,98 @@ const UserManagement = () => {
   return (
     <div className="user-management">
       <GoBackButton />
-     <div className="form-section">
-  <div className="create-section">
-    <h2>Yeni Admin Oluştur</h2>
-    <input
-      className="form-input"
-      type="email"
-      placeholder="Email"
-      value={newAdmin.email}
-      onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
-    />
-    <input
-      className="form-input"
-      type="password"
-      placeholder="Şifre"
-      value={newAdmin.password}
-      onChange={(e) => setNewAdmin({ ...newAdmin, password: e.target.value })}
-    />
-    <button className="form-button1" onClick={createAdmin}>Kaydet</button>
-    {/* admin oluşturma mesajı en altta */}
-    {createAdminMessage && <p className="message">{createAdminMessage}</p>}
 
-    <h2>Yeni Officer Oluştur</h2>
-    <input
-      className="form-input"
-      type="email"
-      placeholder="Email"
-      value={newOfficer.email}
-      onChange={(e) => setNewOfficer({ ...newOfficer, email: e.target.value })}
-    />
-    <input
-      className="form-input"
-      type="password"
-      placeholder="Şifre"
-      value={newOfficer.password}
-      onChange={(e) => setNewOfficer({ ...newOfficer, password: e.target.value })}
-    />
-    <button className="form-button1" onClick={createOfficer}>Kaydet</button>
-    {/* officer oluşturma mesajı en altta */}
-    {createOfficerMessage && <p className="message">{createOfficerMessage}</p>}
-  </div>
+      <div className="form-grid">
+        <div className="form-box">
+          <h2>Yeni Admin Oluştur</h2>
+          <input className="form-input" type="email" placeholder="Email" value={newAdmin.email}
+            onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })} />
+          <input className="form-input" type="password" placeholder="Şifre" value={newAdmin.password}
+            onChange={(e) => setNewAdmin({ ...newAdmin, password: e.target.value })} />
+          <button className="button-primary" onClick={createAdmin}>Kaydet</button>
+          {createAdminMessage && <p className="message">{createAdminMessage}</p>}
 
-  <div className="delete-section">
-    <h2>Admin Sil</h2>
-    <select
-      className="select-box"
-      value={selectedAdminId}
-      onChange={(e) => setSelectedAdminId(e.target.value)}
-    >
-      <option value="">Admin seç</option>
-      {admins.map((admin) => (
-        <option key={admin.id} value={admin.id}>
-          {admin.email}
-        </option>
-      ))}
-    </select>
-    <button className="form-button" onClick={deleteAdmin} disabled={!selectedAdminId}>Sil</button>
-    {/* admin silme mesajı en altta */}
-    {deleteAdminMessage && <p className="message">{deleteAdminMessage}</p>}
+          <h2>Yeni Officer Oluştur</h2>
+          <input className="form-input" type="email" placeholder="Email" value={newOfficer.email}
+            onChange={(e) => setNewOfficer({ ...newOfficer, email: e.target.value })} />
+          <input className="form-input" type="password" placeholder="Şifre" value={newOfficer.password}
+            onChange={(e) => setNewOfficer({ ...newOfficer, password: e.target.value })} />
+          <button className="button-primary" onClick={createOfficer}>Kaydet</button>
+          {createOfficerMessage && <p className="message">{createOfficerMessage}</p>}
+        </div>
 
-    <h2>Officer Sil</h2>
-    <select
-      className="select-box"
-      value={selectedOfficerId}
-      onChange={(e) => setSelectedOfficerId(e.target.value)}
-    >
-      <option value="">Officer seç</option>
-      {officers.map((officer) => (
-        <option key={officer.id} value={officer.id}>
-          {officer.email}
-        </option>
-      ))}
-    </select>
-    <button className="form-button" onClick={deleteOfficer} disabled={!selectedOfficerId}>Sil</button>
-    {/* officer silme mesajı en altta */}
-    {deleteOfficerMessage && <p className="message">{deleteOfficerMessage}</p>}
-  </div>
-</div>
+        <div className="form-box">
+          <h2>Admin Sil</h2>
+          <select className="select-box" value={selectedAdminId}
+            onChange={(e) => setSelectedAdminId(e.target.value)}>
+            <option value="">Admin seç</option>
+            {admins.map((admin) => (
+              <option key={admin.id} value={admin.id}>{admin.email}</option>
+            ))}
+          </select>
+          <button className="button-danger" onClick={deleteAdmin} disabled={!selectedAdminId}>Sil</button>
+          {deleteAdminMessage && <p className="message">{deleteAdminMessage}</p>}
 
+          <h2>Officer Sil</h2>
+          <select className="select-box" value={selectedOfficerId}
+            onChange={(e) => setSelectedOfficerId(e.target.value)}>
+            <option value="">Officer seç</option>
+            {officers.map((officer) => (
+              <option key={officer.id} value={officer.id}>{officer.email}</option>
+            ))}
+          </select>
+          <button className="button-danger" onClick={deleteOfficer} disabled={!selectedOfficerId}>Sil</button>
+          {deleteOfficerMessage && <p className="message">{deleteOfficerMessage}</p>}
+        </div>
+
+        <div className="form-box">
+          <h2>Admin Güncelle</h2>
+          <select className="select-box" value={adminUpdateData.id}
+            onChange={(e) => setAdminUpdateData({ ...adminUpdateData, id: e.target.value })}>
+            <option value="">Admin seç</option>
+            {admins.map((admin) => (
+              <option key={admin.id} value={admin.id}>{admin.email}</option>
+            ))}
+          </select>
+          <input className="form-input" type="text" placeholder="Yeni E-mail" value={adminUpdateData.name}
+            onChange={(e) => setAdminUpdateData({ ...adminUpdateData, name: e.target.value })} />
+            <input
+  className="form-input"
+  type="password"
+  placeholder="Yeni Şifre (boşsa değişmez)"
+  value={adminUpdateData.password}
+  onChange={(e) => setAdminUpdateData({ ...adminUpdateData, password: e.target.value })}
+/>
+
+          <button className="button-primary" onClick={updateAdmin}>Güncelle</button>
+          {updateAdminMessage && <p className="message">{updateAdminMessage}</p>}
+
+          <h2>Officer Güncelle</h2>
+          <select className="select-box" value={officerUpdateData.id}
+            onChange={(e) => setOfficerUpdateData({ ...officerUpdateData, id: e.target.value })}>
+            <option value="">Officer seç</option>
+            {officers.map((officer) => (
+              <option key={officer.id} value={officer.id}>{officer.email}</option>
+            ))}
+          </select>
+          <input className="form-input" type="text" placeholder="Yeni E-mail" value={officerUpdateData.name}
+            onChange={(e) => setOfficerUpdateData({ ...officerUpdateData, name: e.target.value })} />
+            <input
+  className="form-input"
+  type="password"
+  placeholder="Yeni Şifre (boşsa değişmez)"
+  value={officerUpdateData.password}
+  onChange={(e) => setOfficerUpdateData({ ...officerUpdateData, password: e.target.value })}
+/>
+
+          <button className="button-primary" onClick={updateOfficer}>Güncelle</button>
+          {updateOfficerMessage && <p className="message">{updateOfficerMessage}</p>}
+        </div>
+
+      </div>
     </div>
   );
+
 };
 
 export default UserManagement;

@@ -7,6 +7,7 @@ import com.reysas_pdi.backend.core.config.result.ResultHelper;
 import com.reysas_pdi.backend.core.modelMapper.IModelMapperService;
 import com.reysas_pdi.backend.dao.PdiFormRepo;
 import com.reysas_pdi.backend.dto.request.officer.OfficerSaveRequest;
+import com.reysas_pdi.backend.dto.request.officer.OfficerUpdateRequest;
 import com.reysas_pdi.backend.dto.response.officer.OfficerResponse;
 import com.reysas_pdi.backend.dto.response.pdiform.PdiFormResponse;
 import com.reysas_pdi.backend.entity.Administrator;
@@ -47,15 +48,15 @@ public class OfficerController {
       return ResultHelper.created(this.modelMapperService.forResponse().map(saveOfficer, OfficerResponse.class));
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<OfficerResponse> update(@PathVariable("id") Long id, @Valid @RequestBody OfficerSaveRequest officerSaveRequest) {
-        Officer officer = this.modelMapperService.forRequest().map(officerSaveRequest, Officer.class);
-
-        Officer updatedOfficer = this.officerService.update(id, officer);
-
-        return ResultHelper.success(this.modelMapperService.forRequest().map(updatedOfficer,OfficerResponse.class));
+    public ResultData<OfficerResponse> update(@Valid @RequestBody OfficerUpdateRequest request) {
+        Officer officer = this.modelMapperService.forRequest().map(request, Officer.class);
+        Officer updatedOfficer = this.officerService.update(request.getId(), officer);
+        OfficerResponse response = this.modelMapperService.forResponse().map(updatedOfficer, OfficerResponse.class);
+        return ResultHelper.success(response);
     }
+
 
     @GetMapping("/officer/{officerId}/pdiforms")
     public ResultData<List<PdiFormResponse>> getPdiFormsByOfficer(@PathVariable Long officerId) {

@@ -55,12 +55,25 @@ public class OfficerManager implements IOfficerService {
 
     @Override
     public Officer update(Long id, Officer officer) {
-        Officer existingOfficer = this.officerRepo.findById(id).orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
-        existingOfficer.setName(officer.getName());
-        existingOfficer.setEmail(officer.getEmail());
+        Officer existingOfficer = this.officerRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(Msg.NOT_FOUND));
+
+        if (officer.getName() != null && !officer.getName().isBlank()) {
+            existingOfficer.setName(officer.getName());
+        }
+
+        if (officer.getEmail() != null && !officer.getEmail().isBlank()) {
+            existingOfficer.setEmail(officer.getEmail());
+        }
+
+        if (officer.getPassword() != null && !officer.getPassword().isBlank()) {
+            existingOfficer.setPassword(passwordEncoder.encode(officer.getPassword()));
+        }
 
         return this.officerRepo.save(existingOfficer);
     }
+
+
 
     @Override
     public Page<Officer> cursor(int page, int size) {
