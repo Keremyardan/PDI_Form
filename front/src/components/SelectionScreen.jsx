@@ -24,7 +24,7 @@ function SelectionScreen() {
     
         {role === "ADMIN" && (
           <div className='buttonContainer'>
-            <button onClick={() => navigate("/user-management")}>Kullanıcı Oluştur / Sil</button>
+            <button onClick={() => navigate("/user-management")}>Kullanıcı Oluştur / Sil / Güncelle</button>
           </div>
         )}
       </div>
