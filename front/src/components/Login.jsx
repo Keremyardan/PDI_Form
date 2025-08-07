@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
+import cover from "../assets/cover.png"
 
 function Login({ onLogin }) {
       const [username, setUsername] = useState('');
@@ -59,6 +60,7 @@ try {
 
     return (
         <div className="login-container">
+        <img src={cover} alt="Cover" className='login-logo'/>
             <h2>Giriş Yap</h2>
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
