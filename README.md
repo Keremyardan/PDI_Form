@@ -52,6 +52,3 @@ The mobile version is also being developed with a responsive design.
 
 By combining interactive SVG technology for precise visual marking, role-based permissions for secure operations, and real-time synchronization between devices, this project modernizes and streamlines the entire pre-delivery inspection process.
 
-
-
-GitHub Repository: https://github.com/Keremyardan/PDI_Form.git
